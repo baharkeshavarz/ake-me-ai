@@ -7,7 +7,7 @@ import Logo from "../Logo";
 
 const Navbar = () => {
   return (
-    <nav className="absolute w-full flex-between z-50 shadow-light-300 dark:shadow-none px-5">
+    <nav className="flex w-full flex-between z-50 shadow-light-300 dark:shadow-none px-5">
       <Link href="/" className="flex items-center gap-1">
         <Logo
           width={23}
