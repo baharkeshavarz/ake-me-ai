@@ -4,12 +4,10 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Theme from "./Theme";
-import MobileNav from "./MobileNav";
-import GlobalSearch from "../search/GlobalSearch";
 
 const Navbar = () => {
   return (
-    <nav className="flex-between background-light900_dark200 fixed z-50 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
+    <nav className="absolute w-full flex-between z-50 shadow-light-300 dark:shadow-none">
       <Link href="/" className="flex items-center gap-1">
         <Image
           src="/assets/images/site-logo.svg"
@@ -17,14 +15,12 @@ const Navbar = () => {
           height={23}
           alt="DevFlow"
         />
-        <p className="h2-bold text-dark-100 dark:text-light-900 max-sm:hidden">
-          Dev <span className="text-primary-500">Overflow</span>
+        <p className="h2-bold text-light-850 dark:text-light-900 max-sm:hidden">
+          Ask <span className="text-primary-500">AI</span>
         </p>
       </Link>
-      <GlobalSearch />
       <div className="flex-between gap-1">
         <Theme />
-        <MobileNav />
       </div>
     </nav>
   );

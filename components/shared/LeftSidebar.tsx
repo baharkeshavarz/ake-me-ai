@@ -1,18 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import React from "react";
-import { QuestionsList } from "@/constants/patterns";
+import Navbar from "./navbar/Navbar";
 
 const LeftSidebar = () => {
   return (
     <section
       className="bg-dark-500 custom-scrollbar sticky left-0 top-0 flex
-            h-screen flex-col justify-between overflow-y-auto border-r p-6 
+            h-screen flex-col justify-between overflow-y-auto border-r 
             shadow-light-300 dark:shadow-none max-sm:hidden
             lg:w-[266px]"
     >
-      <div className="flex flex-1 flex-col gap-6">
+      <Navbar/>
+      {/* <div className="flex flex-1 flex-col gap-6">
         {QuestionsList.map((item) => {
           return (
             <Link
@@ -26,7 +26,7 @@ const LeftSidebar = () => {
             </Link>
           );
         })}
-      </div>
+      </div> */}
     </section>
   );
 };

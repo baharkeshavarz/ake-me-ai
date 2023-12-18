@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useTheme } from "@/context/ThemeProvider";
 import { themes } from "@/constants";
 import {
   Menubar,
@@ -12,7 +11,7 @@ import {
 } from "@/components/ui/menubar";
 
 const Theme = () => {
-  const { mode, setMode } = useTheme();
+  const mode = "light";
   return (
     <Menubar className="relative border-none bg-transparent shadow-none">
       <MenubarMenu>
@@ -40,12 +39,6 @@ const Theme = () => {
             <MenubarItem
               key={item.value}
               onClick={() => {
-                setMode(item.value);
-                if (item.value !== "system") {
-                  localStorage.setItem("theme", item.value);
-                } else {
-                  localStorage.removeItem("theme");
-                }
               }}
               className="flex items-center gap-4 px-2.5 py-2 focus:bg-light-700 dark:focus:bg-dark-400"
             >
@@ -61,7 +54,7 @@ const Theme = () => {
                 ${
                   mode === item.value
                     ? "text-primary-500"
-                    : "text-dark100_light900"
+                    : "text-dark400_light500"
                 }`}
               >
                 {item.label}
