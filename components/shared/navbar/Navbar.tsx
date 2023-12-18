@@ -2,18 +2,16 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Theme from "./Theme";
+import Logo from "../Logo";
 
 const Navbar = () => {
   return (
-    <nav className="absolute w-full flex-between z-50 shadow-light-300 dark:shadow-none">
+    <nav className="absolute w-full flex-between z-50 shadow-light-300 dark:shadow-none px-5">
       <Link href="/" className="flex items-center gap-1">
-        <Image
-          src="/assets/images/site-logo.svg"
+        <Logo
           width={23}
           height={23}
-          alt="DevFlow"
         />
         <p className="h2-bold text-light-850 dark:text-light-900 max-sm:hidden">
           Ask <span className="text-primary-500">AI</span>

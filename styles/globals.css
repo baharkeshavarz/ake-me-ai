@@ -4,8 +4,41 @@
 
 @import url("../styles/theme.css");
 
+/* Import Fonts */
+@font-face {
+  font-family: yekan-bakh;
+  font-style: normal;
+  font-weight: 200;
+  src: url('../public/assets/fonts/yekan-bakh/YekanBakhFaNum-Thin.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: yekan-bakh;
+  font-style: normal;
+  font-weight: 300;
+  src: url('../public/assets/fonts/yekan-bakh/YekanBakhFaNum-Light.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: yekan-bakh;
+  font-style: normal;
+  font-weight: normal;
+  src: url('../public/assets/fonts/yekan-bakh/YekanBakhFaNum-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: yekan-bakh;
+  font-style: normal;
+  font-weight: bold;
+  src: url('../public/assets/fonts/yekan-bakh/YekanBakhFaNum-Bold.ttf') format('truetype');
+  font-display: swap;
+}
+
 body {
-  font-family: "Inter", sans-serif;
+  font-family: 'yekan-bakh', sans-serif !important;
 }
 
 @layer utilities {
