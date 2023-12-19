@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Theme from "./Theme";
 import Logo from "../Logo";
+import NewChat from "@/components/messages/NewChat";
 
 const Navbar = () => {
   return (
@@ -19,6 +20,7 @@ const Navbar = () => {
       </Link>
       <div className="flex-between gap-1">
         <Theme />
+        <NewChat />
       </div>
     </nav>
   );

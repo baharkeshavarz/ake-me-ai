@@ -1,10 +1,17 @@
 import React from 'react'
+import MessageCard from './MessageCard';
+import { messageList } from '@/constants';
 
 const MessageList = () => {
   return (
-    <div>
-      MessageList
-    </div>
+    <>
+      {messageList.map((message, index) => 
+        <MessageCard
+            key={index}
+            item={message}
+        />
+      )}
+    </>
   )
 }
 

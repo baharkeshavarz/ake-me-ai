@@ -1,4 +1,4 @@
-import { SidebarLink } from "@/types";
+import { MessageItem } from "@/types";
 
 export const themes = [
   {
@@ -18,68 +18,35 @@ export const themes = [
   },
 ];
 
-export const sidebarLinks: SidebarLink[] = [
+export const messageList: MessageItem[] = [
   {
-    imgURL: "/assets/icons/home.svg",
-    route: "/",
-    label: "Home",
+    id: "1",
+    owner: "من",
+    message: "چگوه وام بگیرم؟",
   },
   {
-    imgURL: "/assets/icons/users.svg",
-    route: "/community",
-    label: "Community",
+    id: "2",
+    owner: "سیستم",
+    message: "اجرا قسط یک ماه را ندهیم و ماه بعد دوتا قسط را بدهیم مشکلی پیش میاد میشه جواب بدین",
   },
   {
-    imgURL: "/assets/icons/star.svg",
-    route: "/collection",
-    label: "Collections",
+    id: "3",
+    owner: "سیستم",
+    message: "بدون‌اینکه من درخبر باشم برای من حساب باز کردن وام گرفتن و تقربیا سه ماه پیش از حسابم برداشت \
+    بعداز تحقیق فهمیدم که سه فقره وام 50 میلیون تومانی گرفته\
+    بعداز این که فهمیدم بازرسی کرمان درمیان گذاشتم وچند روز پیش که خبر گرفتم به من گفتم تمام مدارک لازم هست که شما بودین وتعهد رو دادین\
+    وبازرس گفت چون شما از اون شرکت‌ اومدین بیرون شما دارین شکایت میکنید\
+    الان شما به من کمک میکنید که چیکار باید بکنم",
   },
   {
-    imgURL: "/assets/icons/suitcase.svg",
-    route: "/jobs",
-    label: "Find Jobs",
+    id: "4",
+    owner: "من",
+    message: "کسر از حقوق ضامن بابت وام",
   },
   {
-    imgURL: "/assets/icons/tag.svg",
-    route: "/tags",
-    label: "Tags",
-  },
-  {
-    imgURL: "/assets/icons/user.svg",
-    route: "/profile",
-    label: "Profile",
-  },
-  {
-    imgURL: "/assets/icons/question.svg",
-    route: "/ask-question",
-    label: "Ask a question",
-  },
+    id: "5",
+    owner: "من",
+    message: "دریافت وام ازدواج در صورت داشتن بدهی بانکی",
+  }
 ];
 
-export const BADGE_CRITERIA = {
-  QUESTION_COUNT: {
-    BRONZE: 10,
-    SILVER: 50,
-    GOLD: 100,
-  },
-  ANSWER_COUNT: {
-    BRONZE: 10,
-    SILVER: 50,
-    GOLD: 100,
-  },
-  QUESTION_UPVOTES: {
-    BRONZE: 10,
-    SILVER: 50,
-    GOLD: 100,
-  },
-  ANSWER_UPVOTES: {
-    BRONZE: 10,
-    SILVER: 50,
-    GOLD: 100,
-  },
-  TOTAL_VIEWS: {
-    BRONZE: 1000,
-    SILVER: 10000,
-    GOLD: 100000,
-  },
-};

@@ -14,3 +14,9 @@ export interface URLProps {
     [key: string]: string | undefined;
   };
 }
+
+export interface MessageItem {
+  id: string;
+  owner: string;
+  message: string;
+}
