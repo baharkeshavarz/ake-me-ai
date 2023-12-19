@@ -8,7 +8,7 @@ import NewChat from "@/components/messages/NewChat";
 
 const Navbar = () => {
   return (
-    <nav className="flex w-full flex-between z-50 shadow-light-300 dark:shadow-none px-5">
+    <nav className="bg-dark-450 flex w-full flex-between z-50 shadow-light-300 dark:shadow-none px-5">
       <Link href="/" className="flex items-center gap-1">
         <Logo
           width={23}
