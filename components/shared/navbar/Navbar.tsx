@@ -14,11 +14,11 @@ const Navbar = () => {
           width={23}
           height={23}
         />
-        <p className="h2-bold text-light-850 dark:text-light-900 max-sm:hidden">
+        <p className="h3-bold text-light-850 dark:text-light-900 max-sm:hidden">
           Ask <span className="text-primary-500">AI</span>
         </p>
       </Link>
-      <div className="flex-between gap-1">
+      <div className="flex-center">
         <Theme />
         <NewChat />
       </div>

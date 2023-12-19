@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 
 const MessageButton = () => {
   return (
-    <div className="bg-dark-400 relative flex min-h-[56px] w-full items-center justify-center gap-1 rounded-xl px-4">
+    <div className="background-light850_dark100 relative flex min-h-[56px] w-full items-center justify-center gap-4 rounded-xl px-4 light-border">
       <Image
         src="/assets/icons/upvote.svg"
         width={24}
@@ -18,7 +18,7 @@ const MessageButton = () => {
         type="text"
         placeholder="از من سوالت را بپرس"
         value=""
-        className="no-focus placeholder paragraph-regular bg-dark-400 border-none shadow-none outline-none text-right"
+        className="no-focus placeholder paragraph-regular background-light850_dark100 border-none shadow-none outline-none text-right"
       />
     </div>
   );

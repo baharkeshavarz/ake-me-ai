@@ -1,22 +1,24 @@
 import { MessageItem } from "@/types";
 
-export const themes = [
+export const themes = {
+  THEME_DARK: "dark",
+  THEME_LIGHT: "light",
+};
+
+export const themesList = [
   {
     value: "light",
-    label: "Light",
+    label: "روشن",
     icon: "/assets/icons/sun.svg",
   },
   {
     value: "dark",
-    label: "Dark",
+    label: "تاریک",
     icon: "/assets/icons/moon.svg",
-  },
-  {
-    value: "system",
-    label: "System",
-    icon: "/assets/icons/computer.svg",
-  },
+  }
 ];
+
+
 
 export const messageList: MessageItem[] = [
   {

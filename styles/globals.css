@@ -87,7 +87,7 @@ body {
   }
 
   .no-focus {
-    @apply ring-0  border-transparent focus:ring-offset-0 focus:ring-0 !important;
+    @apply ring-0 focus:ring-offset-0 focus:ring-0 !important;
   }
 }
 

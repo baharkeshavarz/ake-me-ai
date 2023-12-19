@@ -7,7 +7,7 @@ interface layoutProps {
 
 const Layout = ({ children }: layoutProps) => {
   return (
-    <main className="bg-light-850 relative">
+    <main className="background-light850_dark100 relative">
       <div className="flex">
         <LeftSidebar />
         <section className="flex min-h-screen flex-1 flex-col px sm:px-14">
