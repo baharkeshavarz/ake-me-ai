@@ -18,6 +18,7 @@ const MessageButton = () => {
         type="text"
         placeholder="از من سوالت را بپرس"
         value=""
+        onChange={() => {}}
         className="no-focus placeholder paragraph-regular background-light800_dark400 border-none text-right text-red-800 shadow-none outline-none"
       />
     </div>
