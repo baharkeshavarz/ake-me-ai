@@ -6,7 +6,7 @@ import { drawerLength } from "@/constants";
 import NavUserInfo from "./navbar/NavUserInfo";
 import NavbarMessageList from "../messages/NavbarMessageList";
 
-const LeftSidebar = () => {
+const RightSidebar = () => {
   const drawer = `lg:w-[${drawerLength}px]`; 
   return (
     <section
@@ -20,4 +20,4 @@ const LeftSidebar = () => {
   );
 };
 
-export default LeftSidebar;
+export default RightSidebar;

@@ -16,7 +16,7 @@ import NavUserInfo from "./NavUserInfo";
 
 const MobileNav = () => {
   return (
-    <div className="background-light800_dark400 flex-between w-full p-5">
+    <div className="background-light900_dark400 flex-between w-full p-5">
       <NewChat/>
       <Link href="/" className="flex items-center gap-1">
         <Image
@@ -42,7 +42,7 @@ const MobileNav = () => {
         </SheetTrigger>
         <SheetContent
           side="right"
-          className="background-light800_dark400 border-none"
+          className="background-light900_dark400 border-none"
         >
           <div className="flex flex-col">
             <SheetClose asChild>
