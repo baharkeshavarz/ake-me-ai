@@ -11,7 +11,7 @@ const RightSidebar = () => {
   return (
     <section
       className={`flex h-screen flex-col justify-between border-r bg-dark-500 p-5
-            shadow-light-300 dark:shadow-none max-sm:hidden ${drawer}`}
+            shadow-light-200 dark:shadow-none max-sm:hidden ${drawer}`}
     >
       <Navbar/>
       <NavbarMessageList/>
