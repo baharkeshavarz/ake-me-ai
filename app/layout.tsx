@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import React from "react";
+import Providers from "@/utils/provider";
 
 export const metadata: Metadata = {
   title: "Ask AI",
@@ -18,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-         {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

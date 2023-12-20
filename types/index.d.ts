@@ -20,3 +20,10 @@ export interface MessageItem {
   owner: string;
   message: string;
 }
+
+
+export type User = {
+  id: number;
+  name: string;
+  email: string;
+};

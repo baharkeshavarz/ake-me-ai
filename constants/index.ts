@@ -155,10 +155,5 @@ export const contextVideoPatterns: any[] = [
     title:"با صدای اصلی",
     videoUrl: "./hint.mp4",
   },
-  {
-    id: "103",
-    title:"با صدای استریو",
-    videoUrl: "./hint.mp4",
-  },
-];
+ ];
 
