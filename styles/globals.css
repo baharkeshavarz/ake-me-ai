@@ -85,12 +85,10 @@ body {
       rgba(19, 22, 28, 0.7) 100%
     );
   }
-
   .no-focus {
     @apply ring-0 focus:ring-offset-0 focus:ring-0 !important;
   }
 }
-
 
 .active-theme {
   filter: invert(53%) sepia(98%) saturate(3332%) hue-rotate(0deg)
