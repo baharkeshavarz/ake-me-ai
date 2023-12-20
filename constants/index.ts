@@ -139,3 +139,26 @@ export const contextMessageList: any[] = [
 ];
 
 
+export const contextVideoPatterns: any[] = [
+  {
+    id: "100",
+    title:"اصلی",
+    videoUrl: "./hint.mp4",
+  },
+  {
+    id: "101",
+    title:"پس زمینه",
+    videoUrl: "./hint.mp4",
+  },
+  {
+    id: "102",
+    title:"با صدای اصلی",
+    videoUrl: "./hint.mp4",
+  },
+  {
+    id: "103",
+    title:"با صدای استریو",
+    videoUrl: "./hint.mp4",
+  },
+];
+

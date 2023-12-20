@@ -36,6 +36,8 @@ const config: Config = {
           700: "#DCE3F1",
           500: "#7B8EC8",
           400: "#858EAD",
+          300: "#515364",
+          200: "#c5c6c7",
         },
         "accent-blue": "#1DA1F2",
       },

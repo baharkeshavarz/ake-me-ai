@@ -4,7 +4,7 @@ import React from 'react'
 
 const WelcomePage = () => {
   return (
-    <div className="flex-center h-screen flex-col">
+    <div className="flex h-screen flex-col">
       <Welcome/>
       <ContextSelector/>
     </div>
