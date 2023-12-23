@@ -67,6 +67,11 @@
     @apply border border-light-200 dark:border-light-300 !important;
   }
 
+  .light-border1 {
+    @apply border border-light-800 dark:border-light-300 !important;
+  }
+
+
   .h1-bold {
     @apply text-[30px] font-bold leading-[42px] tracking-tighter;
   }
@@ -157,5 +162,9 @@
 
   .shadow-light100_darknone {
     @apply shadow-light-100 dark:shadow-none;
+  }
+
+  .shadow-light100_dark200 {
+    @apply shadow-light-100 dark:shadow-dark-200;
   }
 }
