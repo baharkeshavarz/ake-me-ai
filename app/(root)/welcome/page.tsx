@@ -1,12 +1,12 @@
-import ContextSelector from '@/components/context/ContextSelector'
 import Welcome from '@/components/Welcome'
+import MessageButton from '@/components/messages/MessageButton'
 import React from 'react'
 
 const WelcomePage = () => {
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex h-screen flex-col px-3 py-5">
       <Welcome/>
-      <ContextSelector/>
+      <MessageButton/>
     </div>
   )
 }

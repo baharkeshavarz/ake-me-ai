@@ -26,7 +26,7 @@ const MobileNav = () => {
           alt="chatBot"
         />
         <p className="h2-bold font-spaceGrotesk text-dark-100 dark:text-light-900">
-          Dev <span className="text-primary-500">Overflow</span>
+          AI <span className="text-primary-500">Questioning</span>
         </p>
       </Link>
 
@@ -42,7 +42,7 @@ const MobileNav = () => {
         </SheetTrigger>
         <SheetContent
           side="right"
-          className="background-light900_dark400 border-none"
+          className="border-none bg-black"
         >
           <div className="flex flex-col">
             <SheetClose asChild>

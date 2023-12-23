@@ -7,10 +7,7 @@ import SendIcon from "../shared/SendIcon";
 const MessageButton = () => {
   return (
     <div className="background-light900_dark400 light-border relative flex min-h-[56px] w-full items-center justify-center gap-4 rounded-xl px-4">
-     <SendIcon  
-         width={24}
-         height={24}
-       />
+     <SendIcon/>
       <Input
         type="text"
         placeholder="چه جوری می تونم کمکت کنم؟"

@@ -8,7 +8,7 @@ const Messages = () => {
         <div className="flex-1">
           <MessageList/>
         </div>
-        <div className="sticky bottom-0 h-[56px] w-full">
+        <div className="sticky bottom-0 h-[56px] w-full px-4">
           <MessageButton/>
         </div>
     </div>

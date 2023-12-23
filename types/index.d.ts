@@ -1,3 +1,4 @@
+/* General interfaces */
 export interface ParamsProps {
   params: { id: string };
 }
@@ -15,6 +16,7 @@ export interface URLProps {
   };
 }
 
+/* Messages */
 export interface MessageItem {
   id: string;
   owner: string;

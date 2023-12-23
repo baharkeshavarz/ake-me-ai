@@ -6,11 +6,13 @@ interface NavbarMessageCardProps {
 const NavbarMessageCard = ({ title , messages }: NavbarMessageCardProps) => {
   return (
     <div className="pt-5">
-      <h3 className="text-light400_light500 text-right">{title}</h3>
+      <h3 className="text-light400_light500 text-right">
+        {title}
+      </h3>
       <ul className="text-right">
          {messages.map((message, index) =>
             <li
-              key={index} 
+              key={index}
               className="small-semibold p-3 text-white"
               >
                 {message}
