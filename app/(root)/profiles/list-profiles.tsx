@@ -1,6 +1,6 @@
 "use client";
 
-import getAllProfiles from "@/actions/get-profiles";
+import getAllProfiles from "@/actions/get-holograms";
 import { User } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";

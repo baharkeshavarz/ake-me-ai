@@ -16,6 +16,33 @@ export interface URLProps {
   };
 }
 
+/* Faq */
+export interface FaqItem {
+  id: number;
+  faq: string;
+}
+
+/* Hologram */
+export interface HologramItem {
+  id: number;
+  name: string;
+  url: string;
+}
+
+/* Profile */
+export interface ProfileItem {
+  id: number;
+  profile: string;
+}
+
+
+
+
+
+
+
+
+
 /* Messages */
 export interface MessageItem {
   id: string;
