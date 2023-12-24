@@ -1,19 +1,39 @@
 "use client";
 
-import  { useEffect, useState } from "react";
-import {contextVideoPatterns } from "@/constants";
+import  { useCallback, useEffect, useState } from "react";
 import ContextVideoCard from "./ContextVideoCard";
 import ContextFaqCard from "./ContextFaqCard";
 import { getAllFaqs } from "@/actions/get-faqs";
-import { FaqItem, HologramItem, ProfileItem } from "@/types";
+import { FaqItem, HologramItem, ProfileItem, ContextValues } from "@/types";
 import getAllProfiles from "@/actions/get-profiles";
 import ContextProfileCard from "./ContextProfileCard";
 import getAllHolograms from "@/actions/get-holograms";
+import { findElementName } from "@/lib/utils";
 
-const ContextSelector = () => {
+interface ContextSelectorProps {
+   contextValues: ContextValues,
+   setContextValues: any;
+}
+
+const ContextSelector = ({contextValues, setContextValues}: ContextSelectorProps) => {
  const [faqLoading, setFaqLoading] = useState(false);
  const [profileLoading, setProfileLoading] = useState(false);
  const [hologramLoading, setHologramLoading] = useState(false);
+
+
+const changeHandler = useCallback(
+  (e: any) => {
+    const { id, value } = e.target;
+    // console.log("id", id);
+    const name = findElementName(id.toString());
+ 
+    // console.log(contextValues);
+    setContextValues((prevValues: ContextValues) => ({
+      ...prevValues,
+      [name]: value
+    }));
+  }, [contextValues, setContextValues]);
+
 
  const [faqs, setFaqs] = useState<FaqItem[]>([]);
  const [profiles, setProfiles] = useState<ProfileItem[]>([]);
@@ -61,30 +81,31 @@ const ContextSelector = () => {
   getHolograms();
 }, []);
 
- if (faqLoading || profileLoading || hologramLoading) return <p>Loaidng....</p>;
+ if (faqLoading || profileLoading || hologramLoading) return <p>Loaidng...</p>;
 
   return (
     <div className="flex w-full flex-col gap-5 pt-5">
       <div className="light-border flex flex-col items-center justify-center rounded-lg p-5">
-        <h3 className="text-dark400_light900 py-2">
-          نوع ویدثوی درخواستی خود را انتخاب نمایید
+        <h3 className="text-dark400_light900 py-2 text-sm">
+          :نوع ویدثوی درخواستی خود را انتخاب نمایید
         </h3>
        {holograms.length && <ContextVideoCard items={holograms} />}
       </div>
       
       <div className="flex justify-start gap-5">
-        {faqs.length && <ContextFaqCard 
+            {faqs.length && <ContextFaqCard 
                     id="faq"
                     title="سوالات متداول"
                     messages={faqs}
-            />
-        }
-
-        {profiles.length && <ContextProfileCard 
+                    changeHandler={changeHandler}
+             />
+           }
+           {profiles.length && <ContextProfileCard 
               id="profile"
               title="سوالات شخصی"
               messages={profiles}
-        />
+              changeHandler={changeHandler}
+          />
         }
       </div>
     </div>

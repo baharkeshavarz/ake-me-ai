@@ -11,9 +11,10 @@ interface ContextProfileCardProps {
   id: string;
   title: string;
   messages: ProfileItem[];
+  changeHandler: (e: any) => void;
 }
 
-const ContextProfileCard = ({ id, title , messages }: ContextProfileCardProps) => {
+const ContextProfileCard = ({ id, title , messages, changeHandler }: ContextProfileCardProps) => {
   return (
     <div className="pb-5 w-full flex flex-col justify-start items-end px-5">
       <h3 className="text-light400_light500 py-5 text-right">
@@ -29,8 +30,8 @@ const ContextProfileCard = ({ id, title , messages }: ContextProfileCardProps) =
                className="text-dark400_light900 flex  gap-5 text-right w-full"
            >
           <HoverCard>
-            <HoverCardTrigger className="text-sm w-full hover:cursor-pointer">
-                {message.profile.substring(0, 100)}
+            <HoverCardTrigger className="text-[0.75rem] w-full hover:cursor-pointer">
+                {message.profile.substring(0, 100)}...
             </HoverCardTrigger>
             <HoverCardContent className="background-light850_dark100 w-[800px] text-sm">
                {message.profile}
@@ -39,7 +40,8 @@ const ContextProfileCard = ({ id, title , messages }: ContextProfileCardProps) =
 
           <RadioGroupItem 
                 value={message.id.toString()}
-                id={`option-${id}-${index}`}
+                id={`${id}-${message.id.toString()}`}
+                onClick={changeHandler}
             />
             </div>
          )}

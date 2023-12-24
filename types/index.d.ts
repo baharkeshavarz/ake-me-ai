@@ -35,9 +35,40 @@ export interface ProfileItem {
   profile: string;
 }
 
+/* Chat */
+export interface ChatFaq {
+  faq_id: number;
+  question : string;
+}
+
+export interface ChatFaqResponse {
+  response: string;
+  response_id : string;
+}
+
+export interface ChatProfile {
+  profile_id: number;
+  question : string;
+}
+
+export interface ChatProfileResponse {
+  response: string;
+  response_id : string;
+}
+
+/* Voice */
+export interface Voice {
+  text: number;
+  gender : string;
+}
 
 
-
+/* Data for choosing the contex */
+export interface ContextValues {
+  faq: string;
+  profile: string;
+  hologram: string;
+}
 
 
 
@@ -49,10 +80,3 @@ export interface MessageItem {
   owner: string;
   message: string;
 }
-
-
-export type User = {
-  id: number;
-  name: string;
-  email: string;
-};
