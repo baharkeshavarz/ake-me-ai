@@ -1,19 +1,19 @@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { FaqItem } from "@/types";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
+import { ProfileItem } from "@/types";
 
 
-interface ContextFaqCardProps {
+interface ContextProfileCardProps {
   id: string;
   title: string;
-  messages: FaqItem[];
+  messages: ProfileItem[];
 }
 
-const ContextFaqCard = ({ id, title , messages }: ContextFaqCardProps) => {
+const ContextProfileCard = ({ id, title , messages }: ContextProfileCardProps) => {
   return (
     <div className="pb-5 w-full flex flex-col justify-start items-end px-5">
       <h3 className="text-light400_light500 py-5 text-right">
@@ -21,7 +21,7 @@ const ContextFaqCard = ({ id, title , messages }: ContextFaqCardProps) => {
       </h3>
       <RadioGroup
           defaultValue={messages[0].id.toString()}
-         className="gap-4 flex flex-col justify-end items-end"
+         className="gap-4 flex flex-col justify-start items-start"
        >
         {messages.map((message, index) =>
            <div 
@@ -30,10 +30,10 @@ const ContextFaqCard = ({ id, title , messages }: ContextFaqCardProps) => {
            >
           <HoverCard>
             <HoverCardTrigger className="text-sm w-full hover:cursor-pointer">
-                {message.faq.substring(0, 100)}
+                {message.profile.substring(0, 100)}
             </HoverCardTrigger>
             <HoverCardContent className="background-light850_dark100 w-[800px] text-sm">
-               {message.faq}
+               {message.profile}
             </HoverCardContent>
           </HoverCard>
 
@@ -48,4 +48,4 @@ const ContextFaqCard = ({ id, title , messages }: ContextFaqCardProps) => {
   )
 }
 
-export default ContextFaqCard
+export default ContextProfileCard
