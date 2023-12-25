@@ -93,14 +93,15 @@ const changeHandler = useCallback(
       </div>
       
       <div className="flex justify-start gap-5">
-            {faqs.length && <ContextFaqCard 
-                    id="faq"
-                    title="سوالات متداول"
-                    messages={faqs}
-                    changeHandler={changeHandler}
-             />
-           }
-           {profiles.length && <ContextProfileCard 
+          {faqs.length && <ContextFaqCard 
+                id="faq"
+                title="سوالات متداول"
+                messages={faqs}
+                changeHandler={changeHandler}
+          />
+          }
+
+          {profiles.length && <ContextProfileCard 
               id="profile"
               title="سوالات شخصی"
               messages={profiles}
