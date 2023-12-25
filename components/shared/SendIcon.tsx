@@ -12,9 +12,10 @@ interface SendIconProps {
   setChatList: Dispatch<SetStateAction<ChatProfileResponse[]>>;
   question: string;
   setQuestion: Dispatch<SetStateAction<string>>;
+  setCanAskQuestion: Dispatch<SetStateAction<boolean>>;
 }
 
-const SendIcon = ({chatList, setChatList, question, setQuestion}: SendIconProps) => {
+const SendIcon = ({chatList, setChatList, question, setQuestion, setCanAskQuestion}: SendIconProps) => {
   const theme = useThemeStore((state: any) => state.theme);
   const [showContext, setShowContext] = useState(false);
   const [error, setError] = useState(false);
@@ -27,9 +28,11 @@ const SendIcon = ({chatList, setChatList, question, setQuestion}: SendIconProps)
   });
   
   const handleContextClick = () => {
-    setShowContext((prevStatus) => !prevStatus);
+    setShowContext((prevShowContext) => !prevShowContext);
+    setCanAskQuestion(false);
     setOpenBox((prevOpenBox) => !prevOpenBox);
   } 
+  
   const closeBoxOnOutsideClick = useCallback(
     (event: MouseEvent) => {
       if (openBox && !((event.target as HTMLElement).closest('.optionBox'))) {

@@ -12,6 +12,8 @@ interface MessageButtonProps {
 
 const MessageButton = ({chatList, setChatList}: MessageButtonProps) => {
   const [question, setQuestion] = useState("");
+  const [canAskQuestion, setCanAskQuestion] = useState(true);
+
   return (
     <div className="background-light900_dark400 light-border relative flex min-h-[56px] w-full items-center justify-center gap-4 rounded-xl px-4">
        <SendIcon 
@@ -19,11 +21,13 @@ const MessageButton = ({chatList, setChatList}: MessageButtonProps) => {
            setChatList={setChatList}
            question={question}
            setQuestion={setQuestion}
+           setCanAskQuestion= {setCanAskQuestion}
        />
        <Input
              type="text"
-             placeholder="چه جوری می تونم کمکت کنم؟"
+             placeholder= {canAskQuestion ? "!زمینه ی سوال خودت را انتخاب کن" : "چه جوری می تونم کمکت کنم؟" }
              value={question}
+             disabled={canAskQuestion}
              onChange={(e) => setQuestion(e.target.value)}
              className="no-focus placeholder paragraph-regular background-light900_dark400 border-none text-right shadow-none outline-none"
         />
