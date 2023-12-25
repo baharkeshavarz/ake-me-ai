@@ -1,11 +1,16 @@
 import { HologramItem } from "@/types";
-import { getHolograms } from "@/queries/Holograms";
+import { downloadHologramByName, getHolograms } from "@/queries/Holograms";
 
-const getAllHolograms =  async() => {
+export const getAllHolograms =  async() => {
   return (await getHolograms().then(
     (result) => result.data
   )) as HologramItem[];
 };
 
+export const getHologramVideo = async(name: string) => {
+  return (await downloadHologramByName(name).then(
+    (result) => result
+  ));
+};
 
-export default getAllHolograms;
+
