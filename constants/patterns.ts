@@ -1,7 +1,3 @@
-export const VideoPatterns = [
-  { name: "pattern1", value: "pattern-1" },
-];
-
 export const QuestionsList = [
  {
    id: 1,

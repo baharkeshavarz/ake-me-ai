@@ -7,7 +7,7 @@ const getChatByFaq = async(faqId: number, questionTxt: string) => {
         "question": questionTxt,
       };
   return (await chatFaq(formData).then(
-    (result) => console.log(`result.detail: ${result}`)
+    (result) => result
   )) as ChatFaqResponse[];
 };
 

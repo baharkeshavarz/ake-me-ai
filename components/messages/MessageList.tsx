@@ -1,11 +1,15 @@
 import React from 'react'
 import MessageCard from './MessageCard';
-import { messageList } from '@/constants';
+import { ChatProfileResponse } from '@/types';
 
-const MessageList = () => {
+interface MessageListProps {
+  chatList: ChatProfileResponse[];
+}
+
+const MessageList = ({chatList}: MessageListProps) => {
   return (
     <>
-      {messageList.map((message, index) => 
+      {chatList.map((message, index) => 
         <MessageCard
             key={index}
             item={message}

@@ -52,8 +52,8 @@ export interface ChatProfile {
 }
 
 export interface ChatProfileResponse {
-  response: string;
-  response_id : string;
+  id : string;
+  message: string;
 }
 
 /* Voice */

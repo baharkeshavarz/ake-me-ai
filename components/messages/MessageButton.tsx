@@ -1,20 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { Input } from "@/components/ui/input";
 import SendIcon from "../shared/SendIcon";
+import { ChatProfileResponse } from "@/types";
 
-const MessageButton = () => {
+interface MessageButtonProps {
+  chatList: ChatProfileResponse[];
+  setChatList: Dispatch<SetStateAction<ChatProfileResponse[]>>;
+}
+
+const MessageButton = ({chatList, setChatList}: MessageButtonProps) => {
+  const [question, setQuestion] = useState("");
   return (
     <div className="background-light900_dark400 light-border relative flex min-h-[56px] w-full items-center justify-center gap-4 rounded-xl px-4">
-      <SendIcon/>
-      <Input
-        type="text"
-        placeholder="چه جوری می تونم کمکت کنم؟"
-        value=""
-        onChange={() => {}}
-        className="no-focus placeholder paragraph-regular background-light900_dark400 border-none text-right text-red-800 shadow-none outline-none"
-      />
+       <SendIcon 
+           chatList={chatList}
+           setChatList={setChatList}
+           question={question}
+           setQuestion={setQuestion}
+       />
+       <Input
+             type="text"
+             placeholder="چه جوری می تونم کمکت کنم؟"
+             value={question}
+             onChange={(e) => setQuestion(e.target.value)}
+             className="no-focus placeholder paragraph-regular background-light900_dark400 border-none text-right shadow-none outline-none"
+        />
+    
     </div>
   );
 };

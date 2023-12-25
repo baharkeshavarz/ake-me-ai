@@ -1,18 +1,23 @@
 "use client";
 
 import { SendHorizontal, StopCircle } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import ContextSelector from "../context/ContextSelector";
 import useThemeStore from "@/store/useThemeStore";
-import { ChatFaq, ContextValues } from "@/types";
-import { chatFaq } from "@/queries/Chat";
+import { ChatProfileResponse, ContextValues } from "@/types";
 import getChatByFaq from "@/actions/get-chat";
 
-const SendIcon = () => {
+interface SendIconProps {
+  chatList: ChatProfileResponse[];
+  setChatList: Dispatch<SetStateAction<ChatProfileResponse[]>>;
+  question: string;
+  setQuestion: Dispatch<SetStateAction<string>>;
+}
+
+const SendIcon = ({chatList, setChatList, question, setQuestion}: SendIconProps) => {
   const theme = useThemeStore((state: any) => state.theme);
-  const [isClicked, setIsClicked] = useState(false);
+  const [showContext, setShowContext] = useState(false);
   const [error, setError] = useState(false);
-  const [dataList, setDataList] = useState(false);
 
   const [openBox, setOpenBox] = useState(false);
   const [contextValues, setContextValues] = useState<ContextValues>({
@@ -21,37 +26,57 @@ const SendIcon = () => {
     hologram: ''
   });
   
-  const handleClick = () => {
-    setIsClicked((prevStatus) => !prevStatus);
+  const handleContextClick = () => {
+    setShowContext((prevStatus) => !prevStatus);
     setOpenBox((prevOpenBox) => !prevOpenBox);
   } 
-  const closeBoxOnOutsideClick = (event: any) => {
-    if (openBox && !event.target.closest('.optionBox')) {
-      setOpenBox(false);
-    }
-  };
+  const closeBoxOnOutsideClick = useCallback(
+    (event: MouseEvent) => {
+      if (openBox && !((event.target as HTMLElement).closest('.optionBox'))) {
+        setOpenBox(false);
+      }
+    },
+    [openBox, setOpenBox]
+  );
 
   const handleSendClick = async() => {
     setOpenBox((prevOpenBox) => !prevOpenBox);
     // Send first call in chat accordint to the user's selcetion "profile || faq"
-    let response;
+    let response: any = null;
     try {
       setError(false);
       if (contextValues.faq) {
         response = await getChatByFaq(Number(contextValues.faq), "ask");
-        console.log(response);
-
-      } else {
-        response = await getChatByFaq(Number(contextValues.profile), "ask");
+        if (response?.data) {
+          setChatList(prevChatList => [
+            ...prevChatList,
+            {
+              id: response.data.response_id,
+              message: response.data.response
+            }
+          ]);
+        }
       }
-      setDataList(response);
      } catch (error) {
       setError(true);
      } finally {
         setError(false);
+        setQuestion("");
      }
+  }
 
-
+  const handleSendQuestion = async() => {
+    const response = await getChatByFaq(1, question);
+    if (response?.data) {
+      setChatList(prevChatList => [
+        ...prevChatList,
+        {
+          id: response.data.response_id,
+          message: response.data.response
+        }
+      ]);
+      setQuestion("");
+    }
   }
 
   useEffect(() => {
@@ -59,23 +84,32 @@ const SendIcon = () => {
     return () => {
       document.removeEventListener('click', closeBoxOnOutsideClick);
     };
-  }, [openBox]);
+  }, [openBox, closeBoxOnOutsideClick]);
 
   return (
     <>
-     {isClicked 
-     ? <StopCircle onClick={handleSendClick}/>
-     : <SendHorizontal
+    {chatList.length
+      ? <SendHorizontal
           className="relative top-[1px] ml-1 h-5 w-5 rotate-180 transition-transform duration-200"
           color={theme === "light" ? "#000000" : "#f3f3f3"}
           aria-hidden="true"
-          onClick={handleClick}
-         />
-     }
-     {openBox && <div className="optionBox light-border1 duration-400 shadow-light100_dark200 background-light900_dark400 absolute bottom-16 right-0 w-full p-5 transition-all ease-in-out">
+          onClick={handleSendQuestion}
+        />
+     : showContext
+        ?  <StopCircle onClick={handleSendClick}/>
+        :  <SendHorizontal
+            className="relative top-[1px] ml-1 h-5 w-5 rotate-180 transition-transform duration-200"
+            color={theme === "light" ? "#000000" : "#f3f3f3"}
+            aria-hidden="true"
+            onClick={handleContextClick} 
+            />
+      }
+    
+     {openBox && 
+                <div className="optionBox light-border1 duration-400 shadow-light100_dark200 background-light900_dark400 absolute bottom-16 right-0 w-full p-5 transition-all ease-in-out">
                     <ContextSelector
-                       contextValues={contextValues}
-                       setContextValues={setContextValues}
+                        contextValues={contextValues}
+                        setContextValues={setContextValues}
                      />
                  </div>
      }
