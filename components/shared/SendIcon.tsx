@@ -4,19 +4,19 @@ import { SendHorizontal, StopCircle } from "lucide-react";
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import ContextSelector from "../context/ContextSelector";
 import useThemeStore from "@/store/useThemeStore";
-import { ChatProfileResponse, ContextValues } from "@/types";
+import { ContextValues } from "@/types";
 import getChatByFaq from "@/actions/get-chat";
+import useMessageStore from "@/hooks/useMessages";
 
 interface SendIconProps {
-  chatList: ChatProfileResponse[];
-  setChatList: Dispatch<SetStateAction<ChatProfileResponse[]>>;
   question: string;
   setQuestion: Dispatch<SetStateAction<string>>;
   setCanAskQuestion: Dispatch<SetStateAction<boolean>>;
 }
 
-const SendIcon = ({chatList, setChatList, question, setQuestion, setCanAskQuestion}: SendIconProps) => {
+const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => {
   const theme = useThemeStore((state: any) => state.theme);
+  const { chatList, addMessage} = useMessageStore();
   const [showContext, setShowContext] = useState(false);
   const [error, setError] = useState(false);
 
@@ -51,13 +51,12 @@ const SendIcon = ({chatList, setChatList, question, setQuestion, setCanAskQuesti
       if (contextValues.faq) {
         response = await getChatByFaq(Number(contextValues.faq), "ask");
         if (response?.data) {
-          setChatList(prevChatList => [
-            ...prevChatList,
+          addMessage(
             {
               id: response.data.response_id,
               message: response.data.response
             }
-          ]);
+          );
         }
       }
      } catch (error) {
@@ -71,13 +70,12 @@ const SendIcon = ({chatList, setChatList, question, setQuestion, setCanAskQuesti
   const handleSendQuestion = async() => {
     const response = await getChatByFaq(1, question);
     if (response?.data) {
-      setChatList(prevChatList => [
-        ...prevChatList,
+      addMessage(
         {
           id: response.data.response_id,
           message: response.data.response
         }
-      ]);
+      );
       setQuestion("");
     }
   }

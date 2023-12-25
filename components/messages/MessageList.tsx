@@ -1,12 +1,9 @@
 import React from 'react'
 import MessageCard from './MessageCard';
-import { ChatProfileResponse } from '@/types';
+import useMessageStore from '@/hooks/useMessages';
 
-interface MessageListProps {
-  chatList: ChatProfileResponse[];
-}
-
-const MessageList = ({chatList}: MessageListProps) => {
+const MessageList = () => {
+  const { chatList } = useMessageStore();
   return (
     <>
       {chatList.map((message, index) => 

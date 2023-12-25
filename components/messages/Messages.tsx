@@ -1,27 +1,24 @@
 "use client"
 
-import React, { useState } from 'react'
+import React from 'react'
 import MessageList from './MessageList'
 import MessageButton from './MessageButton'
 import Welcome from '../Welcome'
-import { ChatProfileResponse } from '@/types'
+import useMessageStore from '@/hooks/useMessages'
+
 
 const Messages = () => {
-  const [chatList, setChatList] = useState<ChatProfileResponse[]>([]);
-
+  const { chatList} = useMessageStore();
   return (
     <div className="w-full flex-col p-5">
         <div className="flex-1">
          {chatList.length 
-           ? <MessageList chatList={chatList}/>
+           ? <MessageList/>
            : <Welcome/>       
          }
         </div>
         <div className="sticky bottom-0 h-[56px] w-full px-4">
-          <MessageButton
-             chatList={chatList}
-             setChatList={setChatList}
-           />
+          <MessageButton/>
         </div>
     </div>
   )
