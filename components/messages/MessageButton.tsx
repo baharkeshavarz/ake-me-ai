@@ -7,7 +7,6 @@ import SendIcon from "../shared/SendIcon";
 const MessageButton = () => {
   const [question, setQuestion] = useState("");
   const [canAskQuestion, setCanAskQuestion] = useState(true);
-
   return (
     <div className="background-light900_dark400 light-border relative flex min-h-[56px] w-full items-center justify-center gap-4 rounded-xl px-4">
        <SendIcon 

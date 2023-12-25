@@ -3,7 +3,7 @@ import Logo from './shared/Logo'
 
 const Welcome = () => {
   return (
-    <div className="my-auto flex flex-col items-center justify-center gap-2 h-[600px]">
+    <div className="my-auto flex h-[600px] flex-col items-center justify-center gap-2">
       <Logo
         width={23}
         height={23}

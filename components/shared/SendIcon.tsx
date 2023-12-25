@@ -7,6 +7,7 @@ import useThemeStore from "@/store/useThemeStore";
 import { ContextValues } from "@/types";
 import getChatByFaq from "@/actions/get-chat";
 import useMessageStore from "@/hooks/useMessages";
+import { getSendButtonColor } from "@/lib/utils";
 
 interface SendIconProps {
   question: string;
@@ -29,7 +30,6 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
   
   const handleContextClick = () => {
     setShowContext((prevShowContext) => !prevShowContext);
-    setCanAskQuestion(false);
     setOpenBox((prevOpenBox) => !prevOpenBox);
   } 
   
@@ -44,6 +44,7 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
 
   const handleSendClick = async() => {
     setOpenBox((prevOpenBox) => !prevOpenBox);
+    setCanAskQuestion(false);
     // Send first call in chat accordint to the user's selcetion "profile || faq"
     let response: any = null;
     try {
@@ -92,7 +93,7 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
     {chatList.length
       ? <SendHorizontal
           className="relative top-[1px] ml-1 h-5 w-5 rotate-180 transition-transform duration-200"
-          color={theme === "light" ? "#000000" : "#f3f3f3"}
+          color={getSendButtonColor(theme, question)}
           aria-hidden="true"
           onClick={handleSendQuestion}
         />
