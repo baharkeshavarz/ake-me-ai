@@ -1,7 +1,7 @@
 import React from 'react'
 import MessageCard from './MessageCard';
 import useMessageStore from '@/hooks/useMessages';
-import MessageError from './MessageError';
+// import MessageError from './MessageError';
 
 const MessageList = () => {
   const { chatList } = useMessageStore();
@@ -13,7 +13,7 @@ const MessageList = () => {
             item={message}
         />
       )}
-      <MessageError message="خطایی رخ داده است"/>
+      {/* <MessageError message="خطایی رخ داده است"/> */}
     </>
   )
 }

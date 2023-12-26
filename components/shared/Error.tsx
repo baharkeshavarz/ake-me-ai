@@ -6,7 +6,7 @@ interface ErrorProsp {
 
 const Error = ({message} : ErrorProsp) => {
   return (
-    <div className="text-[0.8rem] p-5 flex-center rounded-md error-border-handler error-bg-handler text-dark300_light900">
+    <div className="flex-center error-border-handler error-bg-handler text-dark300_light900 rounded-md p-5 text-[0.8rem]">
          {message}
     </div>
   )

@@ -8,7 +8,8 @@ import { ContextValues } from "@/types";
 import {getChatByFaq, getChatByProfile} from "@/actions/get-chat";
 import useMessageStore from "@/hooks/useMessages";
 import { getSendButtonColor } from "@/lib/utils";
-import { contexts } from "@/constants";
+import { contexts, messageTypes } from "@/constants";
+import { getVoiceByQuestion } from "@/actions/get-voice";
 
 interface SendIconProps {
   question: string;
@@ -48,18 +49,18 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
     setCanAskQuestion(false);
     // Send first call in chat accordint to the user's selcetion "profile || faq"
     let response: any = null;
+    let voiceResponse: any = null;
     setError(false);
 
     if (!contextValues.contextType || !contextValues.contextId || question === "") {
-      console.log("handleSendClick if");
         setError(true);
     } else {
-      console.log("handleSendClick else");
       setCanAskQuestion(true);
       // Add message to list
         addMessage(
           {
             id: "",
+            type: messageTypes.text,
             message: question,
             creator: "شما",
           }
@@ -71,14 +72,27 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
           } else {
             response = await getChatByProfile(Number(contextValues.contextId), question);
           }
+          // call api for getting the voice
+          voiceResponse = await getVoiceByQuestion(question);
           if (response?.data) {
               addMessage(
                 {
                   id: response.data.response_id,
+                  type: messageTypes.text,
                   message: response.data.response,
                   creator: "سیستم",
                 }
               );
+              if (voiceResponse?.url) {
+                addMessage(
+                  {
+                    id: voiceResponse!.unique_id,
+                    type: messageTypes.voice,
+                    message: "voice",
+                    creator: "سیستم",
+                  }
+                );
+              }
             }
          } catch (error) {
           setError(true);
@@ -93,25 +107,42 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
     addMessage(
       {
         id: "",
+        type: messageTypes.text,
         message: question,
         creator: "شما",
       }
     );
 
     let response: any = null;
+    let voiceResponse: any = null;
+
     if (contextValues.contextType === contexts.faq) {
       response = await getChatByFaq(Number(contextValues.contextId), question);
     } else {
       response = await getChatByProfile(Number(contextValues.contextId), question);
-    }
-    if (response?.data) {
+       }
+      // call api for getting the voice
+     voiceResponse = await getVoiceByQuestion(question);
+
+     if (response?.data) {
       addMessage(
         {
           id: response.data.response_id,
+          type: messageTypes.text,
           message: response.data.response,
           creator: "سیستم",
         }
       );
+      if (voiceResponse?.url) {
+        addMessage(
+          {
+            id: voiceResponse!.unique_id,
+            type: messageTypes.voice,
+            message: "voice",
+            creator: "سیستم",
+          }
+        );
+      }
       setQuestion("");
     }
   }
@@ -127,7 +158,7 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
     <>
     {chatList.length
       ? <SendHorizontal
-          className="relative top-[1px] ml-1 h-5 w-5 rotate-180 transition-transform duration-200"
+          className="relative top-[1px] ml-1 h-5 w-5 rotate-180 cursor-pointer transition-transform duration-200"
           color={getSendButtonColor(theme, question)}
           aria-hidden="true"
           onClick={handleSendQuestion}
@@ -138,20 +169,20 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
               className="cursor-pointer"
           />
         :  <SendHorizontal
-            className="relative top-[1px] ml-1 h-5 w-5 rotate-180 transition-transform duration-200"
+            className="relative top-[1px] ml-1 h-5 w-5 rotate-180 cursor-pointer transition-transform duration-200"
             color={theme === "light" ? "#000000" : "#f3f3f3"}
             aria-hidden="true"
             onClick={handleSendClick} 
             />
       }
-     {openBox && 
+      {openBox && 
                 <div className="optionBox light-border1 duration-400 shadow-light100_dark200 background-light900_dark400 absolute bottom-16 right-0 w-full p-5 transition-all ease-in-out">
                     <ContextSelector
                         contextValues={contextValues}
                         setContextValues={setContextValues}
                      />
                  </div>
-     }
+      }
     </>
   )
 }

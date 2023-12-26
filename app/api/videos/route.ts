@@ -15,7 +15,6 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Rang must be provided" });
   }
 
-  // const videoPath = `http://217.218.99.11:8000/download/${videoId}`;
   const videoPath = `/videos/${videoId}`;
   console.log("videoPath", videoPath);
 

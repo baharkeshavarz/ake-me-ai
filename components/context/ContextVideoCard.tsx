@@ -10,7 +10,7 @@ interface ContextVideoCardProps {
 }
 
 const ContextVideoCard = ({ items, changeHandler }: ContextVideoCardProps) => {
-  const [videoId, setVideoId] = useState(items[0].url || "")
+  const [videoId, setVideoId] = useState(items[0].unique_id || "")
 
   function playVideo(e:any, videoId: string){
     e.preventDefault()
@@ -32,13 +32,15 @@ const ContextVideoCard = ({ items, changeHandler }: ContextVideoCardProps) => {
              <div key={item.id} className="text-center">
                 <button
                     onClick={(e)=>{
-                      playVideo(e, item.url);
+                      playVideo(e, item.unique_id);
                       changeHandler(e);
                     }}
                     id={`hologram-${item.id.toString()}`}
                     value={item.id}
                     className={`rounded-lg p-3
-                        ${item.url === videoId ? "background-dark400_light900 text-light700_dark500 " : "background-light900_dark400 text-dark400_light900"}
+                        ${item.unique_id === videoId 
+                          ? "background-dark400_light900 text-light700_dark500 " 
+                          : "background-light900_dark400 text-dark400_light900"}
                        `}   
                   >
                    {item.name}

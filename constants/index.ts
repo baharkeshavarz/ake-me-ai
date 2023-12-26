@@ -9,6 +9,13 @@ export const contexts = {
   hologram: "hologram",
 };
 
+export const messageTypes = {
+  text: "text",
+  voice: "voice",
+  video: "video",
+};
+
+
 
 export const themesList = [
   {

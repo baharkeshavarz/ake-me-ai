@@ -1,10 +1,5 @@
 import axios from "../lib/axios"
 
-export const getVoice = (chatId: number, gender: string) => {
-    return axios.get("/api/v1/getVoice", {
-        params: {
-            chatId,
-            gender
-        }
-      })
+export const voiceByQuestion = (question: string, gender="woman") => {
+    return axios.post(`/voice?text=${question}&gender=${gender}`);
 }

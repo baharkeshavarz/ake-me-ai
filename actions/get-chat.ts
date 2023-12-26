@@ -11,6 +11,7 @@ export const getChatByFaq = async(faqId: number, questionTxt: string) => {
   )) as ChatResponse[];
 };
 
+
 export const getChatByProfile = async(profileId: number, questionTxt: string) => {
   const formData: ChatProfile = {
        "profile_id": profileId,

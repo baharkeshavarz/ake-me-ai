@@ -23,7 +23,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId, width, height }) => 
   return (
     <video ref={videoRef} width={width} height={height} controls>
       <source
-         src={`${API_URL}/download/${videoId}`} 
+         src={`${API_URL}/download/hologram/${videoId}`} 
          type="video/mp4"
       />
       مرورگر شما از این فرمت ویدثو پشتیبانی نمی کند

@@ -1,3 +1,5 @@
+import { messageTypes } from "../constants";
+
 /* General interfaces */
 export interface ParamsProps {
   params: { id: string };
@@ -26,7 +28,7 @@ export interface FaqItem {
 export interface HologramItem {
   id: number;
   name: string;
-  url: string;
+  unique_id: string;
 }
 
 /* Profile */
@@ -53,14 +55,15 @@ export interface ChatProfile {
 
 export interface ChatMessageResponse {
   id : string;
+  type: messageTypes.text | messageTypes.voice | messageTypes.video;
   message: string;
   creator: string;
 }
 
 /* Voice */
-export interface Voice {
-  text: number;
-  gender : string;
+export interface VoiceItem {
+  url: number;
+  unique_id : string;
 }
 
 /* Data for choosing the contex */
