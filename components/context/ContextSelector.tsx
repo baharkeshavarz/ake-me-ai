@@ -84,7 +84,7 @@ const ContextSelector = ({
   if (faqLoading || profileLoading || hologramLoading) return <p>Loaidng...</p>;
   return (
     <div className="flex w-full flex-col gap-5 pt-5">
-      <div className="light-border flex w-full flex-col items-center justify-center rounded-lg bg-gray-100 p-5">
+      <div className="light-border flex w-full flex-col items-center justify-center rounded-lg bg-gray-50 p-5">
         <h3 className="text-dark400_light900 text-sm">
           :نوع ویدثوی درخواستی خود را انتخاب نمایید
         </h3>

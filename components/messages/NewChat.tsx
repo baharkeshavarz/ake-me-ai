@@ -19,6 +19,7 @@ const NewChat = () => {
                color={theme === "light" ? "gray" : "white"}
                size="20"
                onClick={removeList}
+               className="cursor-pointer"
              />
          </HoverCardTrigger>
          <HoverCardContent className="background-light850_dark100 max-w-fit p-3 text-sm text-dark400_light900">

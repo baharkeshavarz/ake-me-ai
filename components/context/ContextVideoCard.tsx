@@ -1,30 +1,46 @@
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+"use client"
+
 import { HologramItem } from "@/types";
-import VideoPlayer from "../VideoPlayer";
+import VideoPlayer from "../shared/VideoPlayer";
+import { useState } from "react";
 
 interface ContextVideoCardProps {
   items: HologramItem[];
 }
 
 const ContextVideoCard = ({ items }: ContextVideoCardProps) => {
+  const [videoId, setVideoId] = useState(items[0].url || "")
+
+  function playVideo(e:any, videoId: string){
+    e.preventDefault()
+    setVideoId(videoId)
+  }
+
   return (
-    <RadioGroup defaultValue={items[0].id.toString()} className="w-full">
-      <div className="rtl-grid grid w-full grid-cols-1 gap-4 pb-1 sm:grid-cols-4">
-        {items.map((item) => (
-          <div key={item.id} className="text-dark400_light900 text-center">
-            <VideoPlayer id={item.url} width="100%" height="150px" />
-            <div className="flex-center gap-2 py-3">
-              <RadioGroupItem
-                value={item.id.toString()}
-                id={`option-${item.id}`}
-              />
-              <Label htmlFor={`option-${item.id}`}>{item.name}</Label>
-            </div>
-          </div>
-        ))}
+     <>
+      <div className="flex w-full h-[200px]">
+          {videoId && <VideoPlayer
+                             videoId={videoId} 
+                             width="100%"
+                             height="h-full"
+                      />
+          } 
       </div>
-    </RadioGroup>
+      <div className="rtl-grid grid w-full grid-cols-1 gap-4 py-2 sm:grid-cols-4 lg:grid-cols-5">
+          {items.map((item) => (
+             <div key={item.id} className="text-center">
+                <button
+                    onClick={(e)=>{playVideo(e, item.url)}}
+                    className={`p-3 rounded-lg
+                        ${item.url === videoId ? "background-dark400_light900 text-light700_dark500 " : "background-light900_dark400 text-dark400_light900"}
+                       `}   
+                  >
+                   {item.name}
+                </button>
+             </div>
+          ))}
+      </div>
+    </>
   );
 };
 
