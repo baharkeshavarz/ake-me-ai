@@ -3,8 +3,8 @@
 import TypingAnimation from '@/components/messages/TypingAnimation'
 import Logo from '@/components/shared/Logo'
 import React from 'react'
-import AudioPlayer from '@/components/shared/AudioPlayer';
 import Error from '@/components/shared/Error';
+import VoicePlayer from '@/components/shared/VoicePlayer';
 
 const AskMe = () => {
   return (
@@ -22,6 +22,7 @@ const AskMe = () => {
     </div>
 
     <Error message="خطایی رخ داده است"/>
+    <VoicePlayer voiceId=''/>
 
     <div className="text-dark400_light900 flex justify-end px-5 py-3">
        <div className="flex-1 px-2">
@@ -41,7 +42,7 @@ const AskMe = () => {
 
 
 
-    <div className="text-dark400_light900 flex justify-end px-5 py-3">
+    {/* <div className="text-dark400_light900 flex justify-end px-5 py-3">
        <div className="flex-1 px-2">
           <div className="base-semibold pt-1 text-right">سیستم</div>
           <p className="py-1 text-right text-sm">
@@ -51,7 +52,7 @@ const AskMe = () => {
         <div>      
          <Logo width={30} height={30} />
         </div>
-    </div>
+    </div> */}
 
 
 

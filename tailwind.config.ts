@@ -19,6 +19,7 @@ const config: Config = {
       colors: {
         primary: {
           500: "#FF7000",
+          400: "#fa750c",
           100: "#FFF1E6",
         },
         dark: {

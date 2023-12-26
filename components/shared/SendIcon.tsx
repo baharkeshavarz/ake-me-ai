@@ -19,7 +19,7 @@ interface SendIconProps {
 const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => {
   const theme = useThemeStore((state: any) => state.theme);
   const { chatList, addMessage} = useMessageStore();
-  const [showContext, setShowContext] = useState(false);
+ // const [showContext, setShowContext] = useState(false);
   const [error, setError] = useState(false);
 
   const [openBox, setOpenBox] = useState(false);
@@ -30,7 +30,7 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
   });
   
   const handleContextClick = () => {
-    setShowContext((prevShowContext) => !prevShowContext);
+   // setShowContext((prevShowContext) => !prevShowContext);
     setOpenBox((prevOpenBox) => !prevOpenBox);
   } 
   
@@ -44,14 +44,18 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
   );
 
   const handleSendClick = async() => {
-    setOpenBox((prevOpenBox) => !prevOpenBox);
+   // setOpenBox((prevOpenBox) => prevOpenBox ? false : prevOpenBox);
     setCanAskQuestion(false);
     // Send first call in chat accordint to the user's selcetion "profile || faq"
     let response: any = null;
     setError(false);
-    if (!contextValues.contextType || !contextValues.contextId || !contextValues.hologram || !question) {
+
+    if (!contextValues.contextType || !contextValues.contextId || question === "") {
+      console.log("handleSendClick if");
         setError(true);
     } else {
+      console.log("handleSendClick else");
+      setCanAskQuestion(true);
       // Add message to list
         addMessage(
           {
@@ -128,19 +132,18 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
           aria-hidden="true"
           onClick={handleSendQuestion}
         />
-     : showContext
+     : !contextValues.contextType
         ?  <StopCircle 
-              onClick={handleSendClick}
+              onClick={handleContextClick} 
               className="cursor-pointer"
           />
         :  <SendHorizontal
             className="relative top-[1px] ml-1 h-5 w-5 rotate-180 transition-transform duration-200"
             color={theme === "light" ? "#000000" : "#f3f3f3"}
             aria-hidden="true"
-            onClick={handleContextClick} 
+            onClick={handleSendClick} 
             />
       }
-     error:{error.toString()}
      {openBox && 
                 <div className="optionBox light-border1 duration-400 shadow-light100_dark200 background-light900_dark400 absolute bottom-16 right-0 w-full p-5 transition-all ease-in-out">
                     <ContextSelector

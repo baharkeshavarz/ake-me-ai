@@ -6,7 +6,7 @@ import SendIcon from "../shared/SendIcon";
 
 const MessageButton = () => {
   const [question, setQuestion] = useState("");
-  const [canAskQuestion, setCanAskQuestion] = useState(true);
+  const [canAskQuestion, setCanAskQuestion] = useState(false);
   return (
     <div className="background-light900_dark400 light-border relative flex min-h-[56px] w-full items-center justify-center gap-4 rounded-xl px-4">
        <SendIcon 
@@ -16,7 +16,7 @@ const MessageButton = () => {
        />
        <Input
              type="text"
-             placeholder= {canAskQuestion ? "!زمینه ی سوال خودت را انتخاب کن" : "چه جوری می تونم کمکت کنم؟" }
+             placeholder= {!canAskQuestion ? ".زمینه ی سوالت را انتخاب کن! بعدش سوالت رو بپرس" : "چه جوری می تونم کمکت کنم؟" }
              value={question}
             // disabled={canAskQuestion}
              onChange={(e) => setQuestion(e.target.value)}
