@@ -18,11 +18,10 @@ const MessageButton = () => {
              type="text"
              placeholder= {canAskQuestion ? "!زمینه ی سوال خودت را انتخاب کن" : "چه جوری می تونم کمکت کنم؟" }
              value={question}
-             disabled={canAskQuestion}
+            // disabled={canAskQuestion}
              onChange={(e) => setQuestion(e.target.value)}
              className="no-focus placeholder paragraph-regular background-light900_dark400 border-none text-right shadow-none outline-none"
         />
-    
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import { ChatProfileResponse } from '@/types';
+import { ChatMessageResponse } from '@/types';
 import {create} from 'zustand';
 
 interface MessageStoreState {
-  chatList: ChatProfileResponse[];
-  addMessage: (item: ChatProfileResponse) => void;
+  chatList: ChatMessageResponse[];
+  addMessage: (item: ChatMessageResponse) => void;
   removeMessage: (index: number) => void;
   removeList: () => void;
 }

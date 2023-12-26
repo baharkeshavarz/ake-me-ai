@@ -30,7 +30,7 @@ const ContextFaqCard = ({
           <RadioButtonComponent
             id={`${id}-${message.id.toString()}`}
             labelText={message.faq}
-            name={title}
+            name="context-type"
             value={message.id.toString()}
             hasHover
             changeHandler={changeHandler}

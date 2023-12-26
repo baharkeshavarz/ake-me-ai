@@ -41,7 +41,7 @@ export interface ChatFaq {
   question : string;
 }
 
-export interface ChatFaqResponse {
+export interface ChatResponse {
   response: string;
   response_id : string;
 }
@@ -51,9 +51,10 @@ export interface ChatProfile {
   question : string;
 }
 
-export interface ChatProfileResponse {
+export interface ChatMessageResponse {
   id : string;
   message: string;
+  creator: string;
 }
 
 /* Voice */
@@ -62,21 +63,9 @@ export interface Voice {
   gender : string;
 }
 
-
 /* Data for choosing the contex */
 export interface ContextValues {
-  faq: string;
-  profile: string;
+  contextType: string;
+  contextId: number;
   hologram: string;
-}
-
-
-
-
-
-/* Messages */
-export interface MessageItem {
-  id: string;
-  owner: string;
-  message: string;
 }

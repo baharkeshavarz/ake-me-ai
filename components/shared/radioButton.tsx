@@ -24,7 +24,7 @@ const RadioButtonComponent = ({
     changeHandler
     } : RadioButtonComponentProps) => {
   return (
-    <div className="flex items-center mb-4 gap-1">
+    <div className="mb-4 flex items-center gap-1">
      {!hasHover
           ? (<label
                 htmlFor={name}
@@ -48,7 +48,7 @@ const RadioButtonComponent = ({
         value={value}
         name={name}
         onClick={changeHandler}
-        className="w-4 h-4 checked:bg-primary-500 focus:outline-none focus:ring-1 text-primary-500"
+        className="h-4 w-4 text-primary-500 checked:bg-primary-500 focus:outline-none focus:ring-1"
      />
    </div>
   )

@@ -26,10 +26,14 @@ const ContextSelector = ({
   const changeHandler = useCallback(
     (e: any) => {
       const { id, value } = e.target;
+      console.log("id", id);
+      console.log("value", value);
       const name = findElementName(id.toString());
       setContextValues((prevValues: ContextValues) => ({
         ...prevValues,
-        [name]: value,
+        "contextType": name,
+        "contextId": value,
+        "hologram": name === "hologram" ? value : "",
       }));
     },
     [setContextValues]
@@ -86,29 +90,36 @@ const ContextSelector = ({
     <div className="flex w-full flex-col gap-5 pt-5">
       <div className="light-border flex w-full flex-col items-center justify-center rounded-lg bg-gray-50 p-5">
         <h3 className="text-dark400_light900 text-sm">
-          :نوع ویدثوی درخواستی خود را انتخاب نمایید
+           :نوع ویدثوی درخواستی خود را انتخاب نمایید
         </h3>
-        {holograms.length && <ContextVideoCard items={holograms} />}
+        {holograms.length 
+          ? <ContextVideoCard 
+               items={holograms} 
+               changeHandler={changeHandler}
+             />
+          : <p>Loaidng...</p>}
       </div>
 
       <div className="flex justify-start gap-5">
-        {faqs.length && (
-          <ContextFaqCard
-            id="faq"
-            title="سوالات متداول"
-            messages={faqs}
-            changeHandler={changeHandler}
-          />
-        )}
+        {faqs.length 
+          ? <ContextFaqCard
+              id="faq"
+              title="سوالات متداول"
+              messages={faqs}
+              changeHandler={changeHandler}
+            />
+          : <p>Loaidng...</p>
+        }
 
-        {profiles.length && (
-          <ContextProfileCard
-            id="profile"
-            title="سوالات شخصی"
-            messages={profiles}
-            changeHandler={changeHandler}
-          />
-        )}
+        {profiles.length 
+          ? <ContextProfileCard
+                id="profile"
+                title="سوالات شخصی"
+                messages={profiles}
+                changeHandler={changeHandler}
+              />
+          : <p>Loaidng...</p>
+        }
       </div>
     </div>
   );

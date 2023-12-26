@@ -7,5 +7,6 @@ export const chatFaq = (data: ChatFaq) => {
 }
 
 export const chatProfile = (data: ChatProfile) => {
-    return axios.post("/chat/profile", data)
+    const url = `/chat/profile?profile_id=${data.profile_id}&question=${encodeURIComponent(data.question)}`;
+    return axios.post(url);
 }

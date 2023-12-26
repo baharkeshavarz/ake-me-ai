@@ -6,9 +6,10 @@ import { useState } from "react";
 
 interface ContextVideoCardProps {
   items: HologramItem[];
+  changeHandler: (e: any) => void;
 }
 
-const ContextVideoCard = ({ items }: ContextVideoCardProps) => {
+const ContextVideoCard = ({ items, changeHandler }: ContextVideoCardProps) => {
   const [videoId, setVideoId] = useState(items[0].url || "")
 
   function playVideo(e:any, videoId: string){
@@ -18,7 +19,7 @@ const ContextVideoCard = ({ items }: ContextVideoCardProps) => {
 
   return (
      <>
-      <div className="flex w-full h-[200px]">
+      <div className="flex h-[200px] w-full">
           {videoId && <VideoPlayer
                              videoId={videoId} 
                              width="100%"
@@ -30,8 +31,13 @@ const ContextVideoCard = ({ items }: ContextVideoCardProps) => {
           {items.map((item) => (
              <div key={item.id} className="text-center">
                 <button
-                    onClick={(e)=>{playVideo(e, item.url)}}
-                    className={`p-3 rounded-lg
+                    onClick={(e)=>{
+                      playVideo(e, item.url);
+                      changeHandler(e);
+                    }}
+                    id={`hologram-${item.id.toString()}`}
+                    value={item.id}
+                    className={`rounded-lg p-3
                         ${item.url === videoId ? "background-dark400_light900 text-light700_dark500 " : "background-light900_dark400 text-dark400_light900"}
                        `}   
                   >

@@ -12,6 +12,8 @@ export const findElementName = (id: string) => {
     return "faq";
   } else if (id.startsWith("profile-")) {
     return "profile";
+  } else if (id.startsWith("hologram-")) {
+    return "hologram";
   } else {
     return "";
   }
