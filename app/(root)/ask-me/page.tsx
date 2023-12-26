@@ -4,6 +4,7 @@ import TypingAnimation from '@/components/messages/TypingAnimation'
 import Logo from '@/components/shared/Logo'
 import React from 'react'
 import AudioPlayer from '@/components/shared/AudioPlayer';
+import Error from '@/components/shared/Error';
 
 const AskMe = () => {
   return (
@@ -20,6 +21,7 @@ const AskMe = () => {
         </div>
     </div>
 
+    <Error message="خطایی رخ داده است"/>
 
     <div className="text-dark400_light900 flex justify-end px-5 py-3">
        <div className="flex-1 px-2">

@@ -6,6 +6,7 @@ export const themes = {
 export const contexts = {
   faq: "faq",
   profile: "profile",
+  hologram: "hologram",
 };
 
 

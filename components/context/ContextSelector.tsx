@@ -9,6 +9,7 @@ import getAllProfiles from "@/actions/get-profiles";
 import ContextProfileCard from "./ContextProfileCard";
 import { getAllHolograms } from "@/actions/get-holograms";
 import { findElementName } from "@/lib/utils";
+import { contexts } from "@/constants";
 
 interface ContextSelectorProps {
   contextValues: ContextValues;
@@ -103,7 +104,7 @@ const ContextSelector = ({
       <div className="flex justify-start gap-5">
         {faqs.length 
           ? <ContextFaqCard
-              id="faq"
+              id={contexts.faq}
               title="سوالات متداول"
               messages={faqs}
               changeHandler={changeHandler}
@@ -113,7 +114,7 @@ const ContextSelector = ({
 
         {profiles.length 
           ? <ContextProfileCard
-                id="profile"
+                id={contexts.profile}
                 title="سوالات شخصی"
                 messages={profiles}
                 changeHandler={changeHandler}

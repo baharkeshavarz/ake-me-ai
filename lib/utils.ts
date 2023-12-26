@@ -1,3 +1,4 @@
+import { contexts } from "@/constants";
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
  
@@ -9,11 +10,11 @@ export function cn(...inputs: ClassValue[]) {
 // Get the name of button in satrting the chat
 export const findElementName = (id: string) => {
   if (id.startsWith("faq-")) {
-    return "faq";
+    return contexts.faq;
   } else if (id.startsWith("profile-")) {
-    return "profile";
+    return contexts.profile;
   } else if (id.startsWith("hologram-")) {
-    return "hologram";
+    return contexts.hologram;
   } else {
     return "";
   }

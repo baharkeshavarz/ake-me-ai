@@ -79,6 +79,13 @@
     @apply border border-light-800 dark:border-light-300 !important;
   }
 
+   .error-border-handler {
+     @apply border border-red-500 dark:border-red-800 !important;
+   }
+
+   .error-bg-handler {
+    @apply bg-[#feecec] dark:bg-[#483741] !important;
+  }
 
   .h1-bold {
     @apply text-[30px] font-bold leading-[42px] tracking-tighter;
