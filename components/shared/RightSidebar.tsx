@@ -10,8 +10,8 @@ const RightSidebar = () => {
   const drawer = `lg:w-[${drawerLength}px]`; 
   return (
     <section
-      className={`flex h-screen flex-col justify-between border-r bg-dark-500 p-5
-            shadow-light-200 dark:shadow-none max-sm:hidden ${drawer}`}
+      className={`flex h-screen flex-col justify-start border-r bg-dark-500 p-5
+            shadow-light-200 max-sm:hidden dark:shadow-none ${drawer}`}
     >
       <Navbar/>
       <NavbarMessageList/>

@@ -48,7 +48,7 @@ const MobileNav = () => {
             <SheetClose asChild>
               <>
                 <Navbar/>
-                <div className="flex-1">
+                <div className="flex-1 overflow-y-auto px-2">
                     <NavbarMessageList/>
                  </div>
                 <NavUserInfo/>

@@ -8,8 +8,8 @@ const Welcome = () => {
         width={23}
         height={23}
       />
-      <h1 className="sm:h1-bold h3-bold text-dark500_light500">
-        امروز چه جوری می تونم کمک کنم؟
+      <h1 className="md:h2-bold h3-bold text-dark500_light500 text-center">
+         !ما ظرف چند دقیقه آینده به همه سوالاتت جواب می‌دیم. فقط کمی صبر کن. ازت بی‌نهایت ممنونیم
       </h1>
   </div>
   )
