@@ -1,9 +1,8 @@
-import VideoPlayer from "@/components/shared/VideoPlayer";
+import VideoSinglePlayer from "@/components/shared/VideoSinglePlayer";
 import React from "react";
 
 const page = () => {
-  const id = "mrannoshe_01.mp4";
-  return <VideoPlayer videoId={id} width="100%" height="200px" />;
+  return <VideoSinglePlayer videoId="-588176033432940647.wav" width='100%' height='150px' />
 };
 
 export default page;

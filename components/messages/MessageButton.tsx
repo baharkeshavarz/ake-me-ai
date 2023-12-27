@@ -16,7 +16,7 @@ const MessageButton = () => {
        />
        <Input
              type="text"
-             placeholder= {!canAskQuestion ? ".زمینه ی سوالت را انتخاب کن! بعدش سوالت رو بپرس" : "چه جوری می تونم کمکت کنم؟" }
+             placeholder= {!canAskQuestion ? ".زمینه ی سوالت را انتخاب کن! بعدش سوالت رو از من بپرس" : "چه جوری می تونم کمکت کنم؟" }
              value={question}
              onChange={(e) => setQuestion(e.target.value)}
              className="no-focus placeholder paragraph-regular background-light900_dark400 border-none text-right shadow-none outline-none"

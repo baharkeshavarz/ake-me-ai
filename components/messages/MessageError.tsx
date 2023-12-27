@@ -11,7 +11,7 @@ const MessageError = ({message}: MessageErrorProps) => {
   return (
     <div className="text-dark400_light900 flex justify-end px-5 py-3">
     <div className="flex-1 px-2">
-       <div className="base-semibold pt-1 text-right">{configInfo.systemLable}</div>
+       <div className="base-semibold pt-1 text-right">{configInfo.systemLabel}</div>
          <Error message={message}/>
     </div>
      <div>      

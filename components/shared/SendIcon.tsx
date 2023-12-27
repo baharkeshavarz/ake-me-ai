@@ -46,13 +46,14 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
     // Send first call in chat accordint to the user's selcetion "profile || faq"
     let response: any = null;
     let voiceResponse: any = null;
+
     setError(false);
 
     if (!contextValues.contextType || !contextValues.contextId || question === "") {
         setError(true);
     } else {
       setCanAskQuestion(true);
-      // Add message to list
+      // Add user's message to list
         addMessage(
           {
             id: "",
@@ -76,7 +77,7 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
                   id: response.data.response_id,
                   type: messageTypes.text,
                   message: response.data.response,
-                  creator: configInfo.systemLable,
+                  creator: configInfo.systemLabel,
                 }
               );
               if (voiceResponse?.url) {
@@ -85,7 +86,15 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
                     id: voiceResponse!.unique_id,
                     type: messageTypes.voice,
                     message: "voice",
-                    creator: configInfo.systemLable,
+                    creator: configInfo.systemLabel,
+                  }
+                );
+                addMessage(
+                  {
+                    id: voiceResponse!.unique_id,
+                    type: messageTypes.video,
+                    message: "video",
+                    creator: configInfo.systemLabel,
                   }
                 );
               }
@@ -111,7 +120,6 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
 
     let response: any = null;
     let voiceResponse: any = null;
-
     if (contextValues.contextType === contexts.faq) {
       response = await getChatByFaq(Number(contextValues.contextId), question);
     } else {
@@ -126,7 +134,7 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
           id: response.data.response_id,
           type: messageTypes.text,
           message: response.data.response,
-          creator: configInfo.systemLable,
+          creator: configInfo.systemLabel,
         }
       );
       if (voiceResponse?.url) {
@@ -135,7 +143,15 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
             id: voiceResponse!.unique_id,
             type: messageTypes.voice,
             message: "voice",
-            creator: configInfo.systemLable,
+            creator: configInfo.systemLabel,
+          }
+        );
+        addMessage(
+          {
+            id: voiceResponse!.unique_id,
+            type: messageTypes.video,
+            message: "video",
+            creator: configInfo.systemLabel,
           }
         );
       }
