@@ -8,9 +8,9 @@ interface TypingAnimationProps{
 const TypingAnimation = ({ text }: TypingAnimationProps) => {
   return (
     <TypeAnimation
-    sequence={[
-      text,
-    ]}
+        sequence={[
+          text,
+        ]}
     wrapper="span"
     speed={50}
     style={{ display: 'inline-block' }}

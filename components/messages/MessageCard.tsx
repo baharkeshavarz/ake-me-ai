@@ -19,7 +19,7 @@ const MessageCard = ({item}: MessageCardProps) => {
           <p className="py-1 text-right text-[0.8rem]">
             {item.type === messageTypes.text && item.creator === configInfo.systemLabel
                ? <TypingAnimation text={item.message}/>
-               : item.type === messageTypes.text ? item.message : "" 
+               : item.type === messageTypes.text ? <div dangerouslySetInnerHTML={{ __html: item.message }}/> : "" 
              }
             {item.type === messageTypes.voice && <VoicePlayer voiceUrl={`${API_URL}/download/voice/${item.id}`} /> }
             {item.type === messageTypes.video && <VideoSinglePlayer videoId={item.id} width='100%' height='150px' /> }

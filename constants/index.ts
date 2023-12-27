@@ -70,3 +70,11 @@ export const historyMessageList: any[] = [
     ],
   },
 ];
+
+
+export const demosInfo = [
+  {
+    title: "بانک ملت",
+    logo: "bank-mellat.png",
+  },
+]
