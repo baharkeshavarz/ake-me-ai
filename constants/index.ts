@@ -1,3 +1,8 @@
+export const configInfo = {
+   "drawerLength": "266",
+   "systemLable": "سیستم",
+}
+
 export const themes = {
   THEME_DARK: "dark",
   THEME_LIGHT: "light",
@@ -15,8 +20,6 @@ export const messageTypes = {
   video: "video",
 };
 
-
-
 export const themesList = [
   {
     value: "light",
@@ -30,7 +33,6 @@ export const themesList = [
   }
 ];
 
-export const drawerLength="266";
 
 export const historyMessageList: any[] = [
   {

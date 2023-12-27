@@ -8,7 +8,7 @@ import { ContextValues } from "@/types";
 import {getChatByFaq, getChatByProfile} from "@/actions/get-chat";
 import useMessageStore from "@/hooks/useMessages";
 import { getSendButtonColor } from "@/lib/utils";
-import { contexts, messageTypes } from "@/constants";
+import { configInfo, contexts, messageTypes } from "@/constants";
 import { getVoiceByQuestion } from "@/actions/get-voice";
 
 interface SendIconProps {
@@ -80,7 +80,7 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
                   id: response.data.response_id,
                   type: messageTypes.text,
                   message: response.data.response,
-                  creator: "سیستم",
+                  creator: configInfo.systemLable,
                 }
               );
               if (voiceResponse?.url) {
@@ -89,7 +89,7 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
                     id: voiceResponse!.unique_id,
                     type: messageTypes.voice,
                     message: "voice",
-                    creator: "سیستم",
+                    creator: configInfo.systemLable,
                   }
                 );
               }
@@ -130,7 +130,7 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
           id: response.data.response_id,
           type: messageTypes.text,
           message: response.data.response,
-          creator: "سیستم",
+          creator: configInfo.systemLable,
         }
       );
       if (voiceResponse?.url) {
@@ -139,7 +139,7 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
             id: voiceResponse!.unique_id,
             type: messageTypes.voice,
             message: "voice",
-            creator: "سیستم",
+            creator: configInfo.systemLable,
           }
         );
       }
