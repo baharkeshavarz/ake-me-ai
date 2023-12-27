@@ -1,9 +1,9 @@
 import React from 'react'
-import Loader from './Loader'
+import PulseLoading from './PulseLoading'
 
 const Loading = () => {
   return (
-     <Loader/>
+     <PulseLoading/>
   )
 }
 

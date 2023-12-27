@@ -10,6 +10,7 @@ import ContextProfileCard from "./ContextProfileCard";
 import { getAllHolograms } from "@/actions/get-holograms";
 import { findElementName } from "@/lib/utils";
 import { contexts } from "@/constants";
+import SpinningLoading from "../shared/loader/SpinningLoading";
 
 interface ContextSelectorProps {
   contextValues: ContextValues;
@@ -86,7 +87,7 @@ const ContextSelector = ({
     getHolograms();
   }, []);
 
-  if (faqLoading || profileLoading || hologramLoading) return <p>Loaidng...</p>;
+  if (faqLoading || profileLoading || hologramLoading) return <SpinningLoading/>;
   return (
     <div className="flex w-full flex-col gap-5 pt-5">
       <div className="light-border flex w-full flex-col items-center justify-center rounded-lg bg-gray-50 p-5">
@@ -98,7 +99,7 @@ const ContextSelector = ({
                items={holograms} 
                changeHandler={changeHandler}
              />
-          : <p>Loaidng...</p>}
+          : <SpinningLoading/> }
       </div>
 
       <div className="flex justify-start gap-5">
@@ -109,17 +110,17 @@ const ContextSelector = ({
               messages={faqs}
               changeHandler={changeHandler}
             />
-          : <p>Loaidng...</p>
+          : <SpinningLoading/>
         }
 
         {profiles.length 
           ? <ContextProfileCard
                 id={contexts.profile}
-                title="سوالات شخصی"
+                title="سوالات پروفایل"
                 messages={profiles}
                 changeHandler={changeHandler}
               />
-          : <p>Loaidng...</p>
+          : <SpinningLoading/>
         }
       </div>
     </div>

@@ -88,11 +88,11 @@
   }
 
   .h1-bold {
-    @apply text-[30px] font-bold leading-[42px] tracking-tighter;
+    @apply text-[28px] font-bold leading-[40px] tracking-tighter;
   }
 
   .h2-bold {
-    @apply text-[24px] font-bold leading-[31.2px];
+    @apply text-[22px] font-bold leading-[30.2px];
   }
 
   .h2-semibold {

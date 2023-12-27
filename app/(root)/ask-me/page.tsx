@@ -5,10 +5,14 @@ import Logo from '@/components/shared/Logo'
 import React from 'react'
 import Error from '@/components/shared/Error';
 import VoicePlayer from '@/components/shared/VoicePlayer';
+import SpinningLoading from '@/components/shared/loader/SpinningLoading';
+import PulseLoading from '@/components/shared/loader/PulseLoading';
 
 const AskMe = () => {
   return (
     <>
+    <PulseLoading size="22" color="green"/>
+    <SpinningLoading />
     <div className="text-dark400_light900 flex justify-end px-5 py-3">
        <div className="flex-1 px-2">
           <div className="base-semibold pt-1 text-right">سیستم</div>
@@ -22,7 +26,7 @@ const AskMe = () => {
     </div>
 
     <Error message="خطایی رخ داده است"/>
-    <VoicePlayer voiceId=''/>
+    <VoicePlayer voiceUrl=''/>
 
     <div className="text-dark400_light900 flex justify-end px-5 py-3">
        <div className="flex-1 px-2">

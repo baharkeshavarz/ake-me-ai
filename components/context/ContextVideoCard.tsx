@@ -39,7 +39,7 @@ const ContextVideoCard = ({ items, changeHandler }: ContextVideoCardProps) => {
                     value={item.id}
                     className={`rounded-lg p-3
                         ${item.unique_id === videoId 
-                          ? "background-dark400_light900 text-light700_dark500 " 
+                          ? "background-dark400_light900 text-light700_dark500" 
                           : "background-light900_dark400 text-dark400_light900"}
                        `}   
                   >
