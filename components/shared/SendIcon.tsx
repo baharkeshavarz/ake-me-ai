@@ -4,12 +4,12 @@ import { SendHorizontal, StopCircle } from "lucide-react";
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import ContextSelector from "../context/ContextSelector";
 import useThemeStore from "@/store/useThemeStore";
-import { ContextValues } from "@/types";
 import {getChatByFaq, getChatByProfile} from "@/actions/get-chat";
 import useMessageStore from "@/hooks/useMessages";
 import { getSendButtonColor } from "@/lib/utils";
 import { configInfo, contexts, messageTypes } from "@/constants";
 import { getVoiceByQuestion } from "@/actions/get-voice";
+import { useMessageContext } from "@/hooks/useMessageContext";
 
 interface SendIconProps {
   question: string;
@@ -20,15 +20,11 @@ interface SendIconProps {
 const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => {
   const theme = useThemeStore((state: any) => state.theme);
   const { chatList, addMessage} = useMessageStore();
- // const [showContext, setShowContext] = useState(false);
   const [error, setError] = useState(false);
+ 
+  const [ openBox, setOpenBox ] = useState(false);
+  const { contextValues } = useMessageContext();
 
-  const [openBox, setOpenBox] = useState(false);
-  const [contextValues, setContextValues] = useState<ContextValues>({
-    contextType: "",
-    contextId: 0,
-    hologram: ""
-  });
   
   const handleContextClick = () => {
    // setShowContext((prevShowContext) => !prevShowContext);
@@ -62,7 +58,7 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
             id: "",
             type: messageTypes.text,
             message: question,
-            creator: "شما",
+            creator: configInfo.userLabel,
           }
         );
       // Call API
@@ -109,7 +105,7 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
         id: "",
         type: messageTypes.text,
         message: question,
-        creator: "شما",
+        creator: configInfo.userLabel,
       }
     );
 
@@ -176,11 +172,10 @@ const SendIcon = ({question, setQuestion, setCanAskQuestion}: SendIconProps) => 
             />
       }
       {openBox && 
-                <div className="optionBox light-border1 duration-400 shadow-light100_dark200 background-light900_dark400 absolute bottom-16 right-0 w-full p-5 transition-all ease-in-out">
-                    <ContextSelector
-                        contextValues={contextValues}
-                        setContextValues={setContextValues}
-                     />
+                <div className="optionBox light-border1 duration-400 shadow-light100_dark200 
+                                background-light900_dark400 absolute bottom-16 right-0 w-full p-5 
+                                transition-all ease-in-out">
+                    <ContextSelector/>
                  </div>
       }
     </>

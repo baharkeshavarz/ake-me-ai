@@ -1,6 +1,7 @@
 export const configInfo = {
    "drawerLength": "266",
    "systemLable": "سیستم",
+   "userLabel": "شما",
 }
 
 export const themes = {

@@ -6,7 +6,7 @@ type MessageErrorStore = {
     onErrorClose: () => void,
 }
 
-export const useConfettiStore = create<MessageErrorStore>((set) => ({
+export const useMessageError = create<MessageErrorStore>((set) => ({
    hasError: false,
    onError: () => set({ hasError: true }),
    onErrorClose: () => set({ hasError: false })

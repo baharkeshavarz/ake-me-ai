@@ -4,41 +4,33 @@ import { useCallback, useEffect, useState } from "react";
 import ContextVideoCard from "./ContextVideoCard";
 import ContextFaqCard from "./ContextFaqCard";
 import { getAllFaqs } from "@/actions/get-faqs";
-import { FaqItem, HologramItem, ProfileItem, ContextValues } from "@/types";
+import { FaqItem, HologramItem, ProfileItem } from "@/types";
 import getAllProfiles from "@/actions/get-profiles";
 import ContextProfileCard from "./ContextProfileCard";
 import { getAllHolograms } from "@/actions/get-holograms";
 import { findElementName } from "@/lib/utils";
 import { contexts } from "@/constants";
 import SpinningLoading from "../shared/loader/SpinningLoading";
+import { useMessageContext } from "@/hooks/useMessageContext";
 
-interface ContextSelectorProps {
-  contextValues: ContextValues;
-  setContextValues: any;
-}
 
-const ContextSelector = ({
-  contextValues,
-  setContextValues,
-}: ContextSelectorProps) => {
+const ContextSelector = () => {
   const [faqLoading, setFaqLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
   const [hologramLoading, setHologramLoading] = useState(false);
+  const {onChange: onChangeContext} = useMessageContext();
 
   const changeHandler = useCallback(
     (e: any) => {
       const { id, value } = e.target;
-      console.log("id", id);
-      console.log("value", value);
       const name = findElementName(id.toString());
-      setContextValues((prevValues: ContextValues) => ({
-        ...prevValues,
+      onChangeContext({
         "contextType": name,
         "contextId": value,
         "hologram": name === "hologram" ? value : "",
-      }));
+      });
     },
-    [setContextValues]
+    [onChangeContext]
   );
 
   const [faqs, setFaqs] = useState<FaqItem[]>([]);

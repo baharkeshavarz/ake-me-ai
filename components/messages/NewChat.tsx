@@ -8,17 +8,28 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
+import { useRouter } from 'next/navigation';
+import { useMessageContext } from "@/hooks/useMessageContext";
 
-const NewChat = () => {
+const NewChat = () => { 
   const theme = useThemeStore((state: any) => state.theme);
-  const {removeList} = useMessageStore();
+  const { removeList } = useMessageStore();
+  const { onRemove } = useMessageContext();
+  const router = useRouter();
+
+  const onClickNew = () => {
+    removeList();
+    onRemove();
+    router.push("/")
+  }
+
   return (
     <HoverCard>
         <HoverCardTrigger>
             <HiOutlinePencilAlt 
                color={theme === "light" ? "gray" : "white"}
                size="20"
-               onClick={removeList}
+               onClick={onClickNew}
                className="cursor-pointer"
              />
          </HoverCardTrigger>

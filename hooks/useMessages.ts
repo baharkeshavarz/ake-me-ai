@@ -10,8 +10,11 @@ interface MessageStoreState {
 
 const useMessageStore = create<MessageStoreState>((set) => {
   // Try to get the data from localStorage on initialization
-  const savedChatList = localStorage.getItem('chatList');
-  const initialState = savedChatList ? { chatList: JSON.parse(savedChatList) } : { chatList: [] };
+  let savedChatList: any = [];
+  if(typeof window !== "undefined") { 
+      savedChatList = localStorage.getItem('chatList') || [];
+  }
+  const initialState = savedChatList.length ? { chatList: JSON.parse(savedChatList as string) } : { chatList: [] };
 
   return {
     ...initialState,
