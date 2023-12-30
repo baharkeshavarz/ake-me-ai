@@ -40,21 +40,21 @@ export interface ProfileItem {
 /* Chat */
 export interface ChatFaq {
   faq_id: number;
-  question : string;
+  question: string;
 }
 
 export interface ChatResponse {
   response: string;
-  response_id : string;
+  response_id: string;
 }
 
 export interface ChatProfile {
   profile_id: number;
-  question : string;
+  question: string;
 }
 
 export interface ChatMessageResponse {
-  id : string;
+  id: string;
   type: messageTypes.text | messageTypes.voice | messageTypes.video;
   message: string;
   creator: string;
@@ -63,7 +63,7 @@ export interface ChatMessageResponse {
 /* Voice */
 export interface VoiceItem {
   url: number;
-  unique_id : string;
+  unique_id: string;
 }
 
 /* Data for choosing the contex */
@@ -71,4 +71,15 @@ export interface ContextValues {
   contextType: string;
   contextId: number;
   hologram: string;
+}
+
+export interface historyMessages {
+  id: string;
+  message: string;
+}
+
+export interface historyMessageItem {
+  id: string;
+  title: string;
+  content: historyMessages[];
 }

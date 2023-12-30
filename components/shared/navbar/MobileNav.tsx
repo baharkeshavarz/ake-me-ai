@@ -9,15 +9,15 @@ import {
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import Link from "next/link";
-import NewChat from "@/components/messages/NewChat";
-import NavbarMessageList from "@/components/messages/NavbarMessageList";
+import NewChat from "@/components/chats/NewChat";
+import NavbarMessageList from "@/components/chats/NavbarMessageList";
 import Navbar from "./Navbar";
 import NavUserInfo from "./NavUserInfo";
 
 const MobileNav = () => {
   return (
     <div className="background-light900_dark400 flex-between w-full p-5">
-      <NewChat/>
+      <NewChat />
       <Link href="/" className="flex items-center gap-1">
         <Image
           src="/assets/images/site-logo.svg"
@@ -40,18 +40,15 @@ const MobileNav = () => {
             className="invert-colors sm:hidden"
           />
         </SheetTrigger>
-        <SheetContent
-          side="right"
-          className="border-none bg-black"
-        >
+        <SheetContent side="right" className="border-none bg-black">
           <div className="flex flex-col">
             <SheetClose asChild>
               <>
-                <Navbar/>
+                <Navbar />
                 <div className="flex-1 overflow-y-auto px-2">
-                    <NavbarMessageList/>
-                 </div>
-                <NavUserInfo/>
+                  <NavbarMessageList />
+                </div>
+                <NavUserInfo />
               </>
             </SheetClose>
           </div>

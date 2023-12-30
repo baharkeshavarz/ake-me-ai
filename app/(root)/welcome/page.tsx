@@ -1,14 +1,14 @@
-import Welcome from '@/components/Welcome'
-import MessageButton from '@/components/messages/MessageButton'
-import React from 'react'
+import Welcome from "@/components/Welcome";
+import MessageButton from "@/components/chats/ChatInput";
+import React from "react";
 
 const WelcomePage = async () => {
   return (
     <div className="flex h-screen flex-col px-3 py-5">
-      <Welcome/>
-      <MessageButton/>
+      <Welcome />
+      <MessageButton />
     </div>
-  )
-}
+  );
+};
 
-export default WelcomePage
+export default WelcomePage;

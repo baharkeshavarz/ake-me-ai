@@ -1,8 +1,8 @@
 export const configInfo = {
-   "drawerLength": "266",
-   "systemLabel": "سیستم",
-   "userLabel": "شما",
-}
+  drawerLength: "266",
+  systemLabel: "سیستم",
+  userLabel: "شما",
+};
 
 export const themes = {
   THEME_DARK: "dark",
@@ -31,50 +31,63 @@ export const themesList = [
     value: "dark",
     label: "تاریک",
     icon: "/assets/icons/moon.svg",
-  }
+  },
 ];
-
 
 export const historyMessageList: any[] = [
   {
-    id: "1",
+    id: "10",
     title: "دیروز",
-    messages: [
-      "این یک متن تستی ست",
-      "این یک متن تستی ست",
+    content: [
+      {
+        id: 100,
+        message: "این یک متن تستی ست",
+      },
     ],
   },
   {
     id: "2",
     title: "سه روز پیش",
-    messages: [
-      "این یک متن تستی ست",
-      "این یک متن تستی ست",
-      "این یک متن تستی ست",
+    content: [
+      {
+        id: 101,
+        message: "این یک متن تستی ست",
+      },
+      {
+        id: 102,
+        message: "این یک متن تستی ست",
+      },
     ],
   },
   {
     id: "3",
     title: "مهرماه",
-    messages: [
-      "این یک متن تستی ست",
-      "این یک متن تستی ست",
-      "این یک متن تستی ست",
+    content: [
+      {
+        id: 200,
+        message: "این یک متن تستی ست",
+      },
+      {
+        id: 201,
+        message: "این یک متن تستی ست",
+      },
     ],
   },
   {
     id: "4",
     title: "شهریورماه",
-    messages: [
-      "این یک متن تستی ست",
+    content: [
+      {
+        id: 300,
+        message: "این یک متن تستی ست",
+      },
     ],
   },
 ];
-
 
 export const demosInfo = [
   {
     title: "بانک ملت",
     logo: "bank-mellat.png",
   },
-]
+];

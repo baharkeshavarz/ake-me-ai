@@ -13,21 +13,20 @@ import { contexts } from "@/constants";
 import SpinningLoading from "../shared/loader/SpinningLoading";
 import { useMessageContext } from "@/hooks/useMessageContext";
 
-
 const ContextSelector = () => {
   const [faqLoading, setFaqLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
   const [hologramLoading, setHologramLoading] = useState(false);
-  const {onChange: onChangeContext} = useMessageContext();
+  const { onChange: onChangeContext } = useMessageContext();
 
   const changeHandler = useCallback(
     (e: any) => {
       const { id, value } = e.target;
       const name = findElementName(id.toString());
       onChangeContext({
-        "contextType": name,
-        "contextId": value,
-        "hologram": name === "hologram" ? value : "",
+        contextType: name,
+        contextId: value,
+        hologram: name === "hologram" ? value : "",
       });
     },
     [onChangeContext]
@@ -79,41 +78,43 @@ const ContextSelector = () => {
     getHolograms();
   }, []);
 
-  if (faqLoading || profileLoading || hologramLoading) return <SpinningLoading/>;
+  if (faqLoading || profileLoading || hologramLoading)
+    return <SpinningLoading />;
   return (
     <div className="flex w-full flex-col gap-5 pt-5">
       <div className="light-border flex w-full flex-col items-center justify-center rounded-lg bg-gray-50 p-5">
         <h3 className="text-dark400_light900 text-sm">
-           :نوع ویدثوی درخواستی خود را انتخاب نمایید
+          :نوع ویدثوی درخواستی خود را انتخاب نمایید
         </h3>
-        {holograms.length 
-          ? <ContextVideoCard 
-               items={holograms} 
-               changeHandler={changeHandler}
-             />
-          : <SpinningLoading/> }
+        {holograms.length ? (
+          <ContextVideoCard items={holograms} changeHandler={changeHandler} />
+        ) : (
+          <SpinningLoading />
+        )}
       </div>
 
       <div className="flex justify-start gap-5">
-        {faqs.length 
-          ? <ContextFaqCard
-              id={contexts.faq}
-              title="سوالات متداول"
-              messages={faqs}
-              changeHandler={changeHandler}
-            />
-          : <SpinningLoading/>
-        }
+        {faqs.length ? (
+          <ContextFaqCard
+            id={contexts.faq}
+            title="سوالات متداول"
+            messages={faqs}
+            changeHandler={changeHandler}
+          />
+        ) : (
+          <SpinningLoading />
+        )}
 
-        {profiles.length 
-          ? <ContextProfileCard
-                id={contexts.profile}
-                title="سوالات پروفایل"
-                messages={profiles}
-                changeHandler={changeHandler}
-              />
-          : <SpinningLoading/>
-        }
+        {profiles.length ? (
+          <ContextProfileCard
+            id={contexts.profile}
+            title="سوالات پروفایل"
+            messages={profiles}
+            changeHandler={changeHandler}
+          />
+        ) : (
+          <SpinningLoading />
+        )}
       </div>
     </div>
   );
