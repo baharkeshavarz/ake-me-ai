@@ -22,14 +22,10 @@ export const useMessageStoreNew = (): MessageStoreState => {
   }, [state.chatList]);
 
   const addMessage = (item: ChatMessageResponse): void => {
-    console.log("addMessage", state.chatList);
     setState((prev) => ({ chatList: [...prev.chatList, item] }));
   };
 
   const updateMessage = (id: string, updatedMessage: ChatMessageResponse): void => {
-    console.log("id", id);
-    console.log("updateMessage", updateMessage);
-
     setState((prev) => ({
       chatList: prev.chatList.map((message) => (message.id === id ? { ...message, ...updatedMessage } : message)),
     }));

@@ -1,10 +1,14 @@
 "use client";
 
-import WebcamVideo from "@/components/shared/WebcamVideo";
-import React from "react";
+import AudioRecorder from "@/components/shared/AudioRecorder_oog";
 
 const page = () => {
-  return <WebcamVideo />
+  return <>
+          <div>
+		      	<AudioRecorder />
+		     	</div>
+  
+  </>
 };
 
 export default page;

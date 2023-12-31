@@ -7,7 +7,6 @@ interface NavbarMessageCardProps {
 }
 
 const NavbarMessageCard = ({ title, content }: NavbarMessageCardProps) => {
-  console.log(content);
   return (
     <div className="pt-5">
       <h3 className="text-light400_light500 text-right">{title}</h3>
