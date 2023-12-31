@@ -1,35 +1,53 @@
 "use client";
 
-import { demosInfo } from "@/constants";
+import { loginInfo } from "@/constants/login";
 import useThemeStore from "@/store/useThemeStore";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from "zod";
 
 export default function Login() {
   const theme = useThemeStore((state: any) => state.theme);
   const router = useRouter();
-  const handleClick = () => {
-    router.push("/");
-  };
+
+  const schema = z.object({
+    username: z.string().email('نام کاربری اشتباه است'),
+    password: z.string().min(6, 'پسورد حداقل باید 6 کاراکتر باشد'),
+  });
+
+  type FormData = z.infer<typeof schema>;
+    const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+      resolver: zodResolver(schema),
+      defaultValues: {
+        username: "",
+        password: "",
+      }
+    });
+      
+    const onSubmit: SubmitHandler<FormData> = (data) => {
+      router.push("/");
+    };
 
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
       <div
         className={`w-full rounded-md p-6 shadow-xl lg:max-w-xl ${
-          theme === "dark" ? "bg-dark-400" : "bg-light-900"
+          theme === "dark" ? "bg-dark-400" : "bg-light-700/5"
         }`}
       >
         <div className="flex-center">
           <div className="hidden">{theme} </div>
           <Image
-            src={`/assets/logos/${demosInfo[0].logo}`}
-            width={150}
-            height={150}
-            alt={demosInfo[0].title}
+            src={`/assets/logos/${loginInfo[0].logo}`}
+            width={100}
+            height={100}
+            alt={loginInfo[0].title}
           />
         </div>
-        <form className="mt-6">
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label
               htmlFor="username"
@@ -41,9 +59,11 @@ export default function Login() {
             </label>
             <input
               type="email"
+              {...register('username')}
               className="mt-2 block w-full rounded-md border bg-white px-4 py-2 text-gray-700 focus:border-gray-400 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
             />
-          </div>
+              {errors.username && <p className="text-red-500 text-[0.7rem] flex justify-end items-center py-2">{errors.username.message}</p>}
+           </div>
           <div className="mb-2">
             <label
               htmlFor="password"
@@ -55,8 +75,10 @@ export default function Login() {
             </label>
             <input
               type="password"
+              {...register('password')}
               className="mt-2 block w-full rounded-md border bg-white px-4 py-2 text-gray-700 focus:border-gray-400 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
             />
+            {errors.password && <p className="text-red-500 text-[0.7rem] flex justify-end items-center py-2">{errors.password.message}</p>}
           </div>
           <Link
             href="/forget"
@@ -66,7 +88,6 @@ export default function Login() {
           </Link>
           <div className="mt-2">
             <button
-              onClick={handleClick}
               className="w-full cursor-pointer rounded-md bg-gray-700 px-4 py-2 tracking-wide text-white transition-colors duration-200 hover:bg-gray-600 focus:bg-gray-600 focus:outline-none"
             >
               ورود
