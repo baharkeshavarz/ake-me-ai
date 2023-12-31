@@ -12,7 +12,19 @@
   }
 
   .background-dark400_light900 {
-    @apply bg-dark-400 dark:bg-light-900 !important;
+    @apply bg-dark-400 dark:bg-light-900 hover:bg-light-400 hover:dark:bg-light-700 !important;
+  }
+
+  .background-strop_upload {
+    @apply bg-red-500 hover:bg-red-700 !important;
+  }
+
+  .background-upload {
+    @apply bg-green-500 hover:dark:bg-green-700 !important;
+  }
+
+  .background-send_upload {
+    @apply bg-primary-500 hover:dark:bg-primary-400 !important;
   }
 
   .text-dark100_light900 {

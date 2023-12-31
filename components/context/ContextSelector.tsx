@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import ContextVideoCard from "./ContextVideoCard";
 import ContextFaqCard from "./ContextFaqCard";
 import { getAllFaqs } from "@/actions/get-faqs";
 import { FaqItem, HologramItem, ProfileItem } from "@/types";
@@ -9,9 +8,10 @@ import getAllProfiles from "@/actions/get-profiles";
 import ContextProfileCard from "./ContextProfileCard";
 import { getAllHolograms } from "@/actions/get-holograms";
 import { findElementName } from "@/lib/utils";
-import { contexts } from "@/constants";
+import { contexts, roles } from "@/constants";
 import SpinningLoading from "../shared/loader/SpinningLoading";
 import { useMessageContext } from "@/hooks/useMessageContext";
+import ContextVideoList from "./ContextVideoList";
 
 const ContextSelector = () => {
   const [faqLoading, setFaqLoading] = useState(false);
@@ -65,7 +65,8 @@ const ContextSelector = () => {
       try {
         setHologramLoading(true);
         const response = await getAllHolograms();
-        setHolograms(response);
+        const modifiedHologrms = response.map(hologram => ({...hologram, role: roles.SYSTEM}));
+        setHolograms(modifiedHologrms);
       } catch (error) {
         console.log("error", error);
       } finally {
@@ -82,17 +83,11 @@ const ContextSelector = () => {
     return <SpinningLoading />;
   return (
     <div className="flex w-full flex-col gap-5 pt-5">
-      <div className="light-border flex w-full flex-col items-center justify-center rounded-lg bg-gray-50 p-5">
-        <h3 className="text-dark400_light900 text-sm">
-          :نوع ویدثوی درخواستی خود را انتخاب نمایید
-        </h3>
-        {holograms.length ? (
-          <ContextVideoCard items={holograms} changeHandler={changeHandler} />
-        ) : (
-          <SpinningLoading />
-        )}
-      </div>
-
+      <ContextVideoList
+          holograms={holograms}
+          setHolograms={setHolograms}
+          changeHandler={changeHandler}
+      />
       <div className="flex justify-start gap-5">
         {faqs.length ? (
           <ContextFaqCard

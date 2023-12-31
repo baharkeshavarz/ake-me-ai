@@ -7,6 +7,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
+export const randomNumberInRange = (min: number, max: number) => {
+  return Math.floor(Math.random()
+      * (max - min + 1)) + min;
+};
+
+
+
 // Get the name of button in satrting the chat
 export const findElementName = (id: string) => {
   if (id.startsWith("faq-")) {

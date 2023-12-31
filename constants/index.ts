@@ -4,6 +4,11 @@ export const configInfo = {
   userLabel: "شما",
 };
 
+export const roles = {
+  SYSTEM: "system",
+  USER: "user",
+};
+
 export const themes = {
   THEME_DARK: "dark",
   THEME_LIGHT: "light",

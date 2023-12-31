@@ -11,3 +11,7 @@ export const downloadHologramByName = (name: string) => {
 export const uploadHologram = (file: any) => {
     return axios.post('/hologram', file);
 }
+
+export const deleterHologramById = (uniqueId: string) => {
+    return axios.delete(`/hologram/${uniqueId}`);
+}

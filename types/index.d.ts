@@ -1,4 +1,4 @@
-import { messageTypes } from "../constants";
+import { messageTypes, roles } from "../constants";
 
 /* General interfaces */
 export interface ParamsProps {
@@ -25,10 +25,17 @@ export interface FaqItem {
 }
 
 /* Hologram */
+// export interface HologramItemResponse {
+//   id: number;
+//   name: string;
+//   unique_id: string;
+// }
+
 export interface HologramItem {
   id: number;
   name: string;
   unique_id: string;
+  role: roles.SYSTEM | roles.USER
 }
 
 /* Profile */
