@@ -1,9 +1,14 @@
 "use client"
 import { uploadVoiceToGetTransscribe } from '@/actions/get-voice';
+import { useChatNumber } from '@/hooks/useChatNumber';
 import React, { useState } from 'react'
 import { ReactMic } from 'react-mic';
 
 const page = () => {
+  const { inx, onSet} = useChatNumber();
+  onSet(111);
+  console.log(">>>>>>>>>>", inx);
+
     const [record, setRecord] = useState(false);
     const startRecording = () => {
         setRecord(true);

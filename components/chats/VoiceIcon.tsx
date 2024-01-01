@@ -1,10 +1,15 @@
 import React from 'react'
 import AudioRecorder from '../shared/AudioRecorder'
 
-const VoiceIcon = () => {
+interface VoiceIconProps {
+  list: any,
+  setList: any,
+}
+
+const VoiceIcon = ({list, setList}: VoiceIconProps) => {
   return (
     <div className="absolute left-12 top-0 z-50 h-[56px]">
-       <AudioRecorder />
+       <AudioRecorder list={list} setList={setList}/>
     </div>
   )
 }

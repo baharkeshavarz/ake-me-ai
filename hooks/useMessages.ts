@@ -4,6 +4,7 @@ import {create} from 'zustand';
 interface MessageStoreState {
   chatList: ChatMessageResponse[];
   addMessage: (item: ChatMessageResponse) => void;
+  updateMessage: (index: number, updatedItem: ChatMessageResponse) => void;
   removeMessage: (index: number) => void;
   removeList: () => void;
 }
@@ -21,6 +22,15 @@ const useMessageStore = create<MessageStoreState>((set) => {
     addMessage: (item) => set((state) => {
       const newChatList = [...state.chatList, item];
       localStorage.setItem('chatList', JSON.stringify(newChatList));
+      return { chatList: newChatList };
+    }),
+    updateMessage: (index, updatedItem) =>
+    set((state) => {
+      const newChatList = [...state.chatList];
+      newChatList[index] = updatedItem;
+      localStorage.setItem('chatList', JSON.stringify(newChatList));
+      console.log("updateMessage", newChatList);
+
       return { chatList: newChatList };
     }),
     removeMessage: (index) => set((state) => {

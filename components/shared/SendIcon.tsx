@@ -13,19 +13,22 @@ import ContextSelector from "../context/ContextSelector";
 import useThemeStore from "@/store/useThemeStore";
 import { getChatByFaq, getChatByProfile } from "@/actions/get-chat";
 import useMessageStore from "@/hooks/useMessages";
-import { getSendButtonColor } from "@/lib/utils";
+import { getSendButtonColor, randomNumberInRange } from "@/lib/utils";
 import { configInfo, contexts, messageTypes } from "@/constants";
 import { getVoiceByQuestion } from "@/actions/get-voice";
 import { useMessageContext } from "@/hooks/useMessageContext";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { systemChatLoading, systemChatSuccess } from "@/constants/general";
+import { useChatNumber } from "@/hooks/useChatNumber";
 
 interface SendIconProps {
   question: string;
   setQuestion: Dispatch<SetStateAction<string>>;
   setCanAskQuestion: Dispatch<SetStateAction<boolean>>;
   chatId: string;
+  list: any;
+  setList: any;
 }
 
 const SendIcon = ({
@@ -33,12 +36,30 @@ const SendIcon = ({
   setQuestion,
   setCanAskQuestion,
   chatId,
+  list,
+  setList,
 }: SendIconProps) => {
   const theme = useThemeStore((state: any) => state.theme);
-  const { chatList, addMessage } = useMessageStore();
+  const { inx, onSet} = useChatNumber();
   const [error, setError] = useState(false);
   const [openBox, setOpenBox] = useState(false);
   const { contextValues } = useMessageContext();
+  const [itemIndexToUpdate, setItemIndexToUpdate] = useState(0);
+  console.log("lit in SendIcon:::", list);
+  let randId = 0;
+
+  const updateObjectInList = (updatedObject: any, index: number) => {
+    // console.log("itemIndexToUpdate in updateObjectInList:::", itemIndexToUpdate);
+    setList((prevList) =>
+      prevList.map((obj) => {
+        if (obj.id === index) {
+          return { ...obj, ...updatedObject };
+        }
+        return obj;
+      })
+    );
+  };
+
   const router = useRouter();
   let textNotification = "";
   let userQuestion = question;
@@ -58,6 +79,7 @@ const SendIcon = ({
 
   const handleSendClick = async () => {
     console.log("handleSendClick")
+    randId = randomNumberInRange(100, 1000);
     setCanAskQuestion(false);
     // Send first call in chat accordint to the user's selcetion "profile || faq"
     let response: any = null;
@@ -69,22 +91,32 @@ const SendIcon = ({
       !contextValues.contextId ||
       question === ""
     ) {
-      setError(true);
+      toast.error("زمینه ی سوال و خود سوال رو برام بفرست");
     } else {
       userQuestion = question;
       setCanAskQuestion(true);
       setQuestion("");
       textNotification = toast.loading(systemChatLoading.message);
 
+      setItemIndexToUpdate(randId);
       // Add user's message to list
-      addMessage({
+      setList(prevList => [...prevList, {
         id: "",
         type: messageTypes.text,
         message: userQuestion,
         creator: configInfo.userLabel,
-      });
+      }]);
+
+      onSet(randId);
       // Call API
       try {
+        setList(prevList => [...prevList, {
+          id: randId,
+          type: messageTypes.text,
+          message: "",
+          creator: configInfo.systemLabel,
+        }]);
+
         if (contextValues.contextType === contexts.faq) {
           response = await getChatByFaq(
             Number(contextValues.contextId),
@@ -98,12 +130,12 @@ const SendIcon = ({
         }
 
         if (response?.data) {
-          addMessage({
+          updateObjectInList({
             id: response.data.response_id,
             type: messageTypes.text,
             message: response.data.msg,
             creator: configInfo.systemLabel,
-          });
+          }, randId);
 
          toast.success(systemChatSuccess.message, {
               id: textNotification,
@@ -113,18 +145,19 @@ const SendIcon = ({
           // call api for getting the voice
           voiceResponse = await getVoiceByQuestion(response.data.msg);
           if (voiceResponse?.url) {
-            addMessage({
+            setList(prevList => [...prevList, {
               id: voiceResponse!.unique_id,
               type: messageTypes.voice,
               message: "voice",
               creator: configInfo.systemLabel,
-            });
-            addMessage({
+            }]);
+
+            setList(prevList => [...prevList, {
               id: voiceResponse!.unique_id,
               type: messageTypes.video,
               message: "video",
               creator: configInfo.systemLabel,
-            });
+            }]);
           }
         }
       } catch (error) {
@@ -139,12 +172,13 @@ const SendIcon = ({
   const handleSendQuestion = async () => {
     console.log("handleSendQuestion")
 
-    addMessage({
+    setList(prevList => [...prevList, {
       id: "",
       type: messageTypes.text,
       message: question,
       creator: configInfo.userLabel,
-    });
+    }]);
+
 
     textNotification = toast.loading(systemChatLoading.message);
 
@@ -158,35 +192,43 @@ const SendIcon = ({
         question
       );
     }
+
+    setList(prevList => [...prevList, {
+      id: "",
+      type: messageTypes.text,
+      message: "",
+      creator: configInfo.systemLabel,
+    }]);
+
     // call api for getting the voice
     voiceResponse = await getVoiceByQuestion(question);
 
     if (response?.data) {
-      addMessage({
+      updateObjectInList({
         id: response.data.response_id,
         type: messageTypes.text,
         message: response.data.msg,
         creator: configInfo.systemLabel,
-      });
+      }, randId);
 
       toast.success(systemChatSuccess.message, {
         id: textNotification,
       });
 
       if (voiceResponse?.url) {
-        addMessage({
+        setList(prevList => [...prevList, {
           id: voiceResponse!.unique_id,
           type: messageTypes.voice,
           message: "voice",
           creator: configInfo.systemLabel,
-        });
-        addMessage({
+        }]);
+        setList(prevList => [...prevList, {
           id: voiceResponse!.unique_id,
           type: messageTypes.video,
           message: "video",
           creator: configInfo.systemLabel,
-        });
-      }
+        }]);
+              }
       setQuestion("");
     }
   };
@@ -200,7 +242,7 @@ const SendIcon = ({
 
   return (
     <>
-      {chatList.length ? (
+      {list.length ? (
         <SendHorizontal
           className="relative top-[1px] ml-1 h-5 w-5 rotate-180 cursor-pointer transition-transform duration-500"
           color={getSendButtonColor(theme, question)}

@@ -14,9 +14,14 @@ import { useRouter } from 'next/navigation';
 import SpinningLoading from './loader/SpinningLoading';
 import { useMessageContext } from '@/hooks/useMessageContext';
 import { getChatByFaq, getChatByProfile } from '@/actions/get-chat';
+import { randomNumberInRange } from '@/lib/utils';
 
+interface AudioRecorderProps {
+  list: any,
+  setList: any,
+}
 
-const AudioRecorder = () => {
+const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
   const [permission, setPermission] = useState(false);
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const [recordingStatus, setRecordingStatus] = useState('inactive');
@@ -26,7 +31,6 @@ const AudioRecorder = () => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [showTimer, setShowTimer] = useState(false);
   const [showMic, setShowMic] = useState(false);
-  const {chatList, addMessage } = useMessageStore();
   const [loading, setLoading] = useState(false);
   const { contextValues } = useMessageContext();
 
@@ -35,6 +39,20 @@ const AudioRecorder = () => {
   let systemResponse: any = null;
   let response: any = null;
   const mimeType = "audio/wav";
+  let randId = 0;
+
+
+  const updateObjectInList = (updatedObject: any, index: number) => {
+    setList((prevList) =>
+      prevList.map((obj) => {
+        if (obj.id === index) {
+          return { ...obj, ...updatedObject };
+        }
+        return obj;
+      })
+    );
+  };
+
 
   const getMicrophonePermission = async () => {
     if(!contextValues.contextType) {
@@ -81,7 +99,6 @@ const AudioRecorder = () => {
   const stopRecording = async () => {
     setRecordingStatus('inactive');
     mediaRecorder.current?.stop();
-
     // Handle Timer
     setShowTimer(false); 
     if (timerInterval) {
@@ -102,6 +119,7 @@ const AudioRecorder = () => {
   };
 
   const sendAudioToAPI = async (audioBlob: any) => {
+    randId = randomNumberInRange(100, 1000);
     setLoading(true);
     try {
       const blob = new Blob(audioBlob);
@@ -111,15 +129,22 @@ const AudioRecorder = () => {
 
 		if (response.ok) {
       // Add user's message to list
-      addMessage({
+      setList(prevList => [...prevList, {
         id: "",
         type: messageTypes.text,
         message: response.transcript,
         creator: configInfo.userLabel,
-      });
+      }]);
 
       // Call API
       try {
+        setList(prevList => [...prevList, {
+          id: randId,
+          type: messageTypes.text,
+          message: "",
+          creator: configInfo.systemLabel,
+        }]);
+
         if (contextValues.contextType === contexts.faq) {
           systemResponse = await getChatByFaq(
             Number(contextValues.contextId),
@@ -133,13 +158,13 @@ const AudioRecorder = () => {
         }
 
         if (systemResponse?.data) {
-          addMessage({
+          updateObjectInList({
             id: systemResponse.data.response_id,
             type: messageTypes.text,
             message: systemResponse.data.msg,
             creator: configInfo.systemLabel,
-          });
-
+          }, randId);
+         
         //  toast.success(systemChatSuccess.message, {
         //       id: textNotification,
         //   });
@@ -147,17 +172,8 @@ const AudioRecorder = () => {
         }
       } catch (error) {
       } finally {
-        //
+        // todo
       }
-
-
-
-      // addMessage({
-      //   id: "",
-      //   type: messageTypes.text,
-      //   message: response.transcript,
-      //   creator: configInfo.systemLabel,
-      // });
       setLoading(false);
       handleCancelRecordingClick();
       router.push("/chat/1");

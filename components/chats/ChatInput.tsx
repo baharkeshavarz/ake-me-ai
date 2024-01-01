@@ -8,9 +8,11 @@ import { useMessageContext } from "@/hooks/useMessageContext";
 
 type ChatInputProps = {
   chatId: string;
+  list?: any;
+  setList?: any;
 };
 
-const ChatInput = ({ chatId }: ChatInputProps) => {
+const ChatInput = ({ chatId, list, setList }: ChatInputProps) => {
   const [question, setQuestion] = useState("");
   const [canAskQuestion, setCanAskQuestion] = useState(false);
   const { contextValues } = useMessageContext();
@@ -22,8 +24,13 @@ const ChatInput = ({ chatId }: ChatInputProps) => {
         setQuestion={setQuestion}
         setCanAskQuestion={setCanAskQuestion}
         chatId={chatId}
+        list={list}
+        setList={setList}
       />
-      <VoiceIcon/>
+      <VoiceIcon 
+              list={list}
+              setList={setList}
+      />
       <Input
         type="text"
         placeholder={

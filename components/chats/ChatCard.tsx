@@ -10,18 +10,24 @@ import { loginInfo } from "@/constants/login";
 
 interface ChatCardProps {
   item: ChatMessageResponse;
+  index: number;
 }
 
-const ChatCard = ({ item }: ChatCardProps) => {
+const ChatCard = ({ item, index }: ChatCardProps) => {
   return (
     <div className="text-dark400_light900 flex justify-end px-5 py-3">
       <div className="flex-1 px-2">
         <div className="base-semibold pt-1 text-right">{item.creator}</div>
         <p className="py-1 text-right text-[0.8rem]">
           {item.type === messageTypes.text &&
-          item.creator === configInfo.systemLabel ? (
-            <TypingAnimation text={item.message} />
-          ) : item.type === messageTypes.text ? (
+          item.creator === configInfo.systemLabel ?
+            item.message === "" ? 
+            <div className="flex-end gap-x-2 px-2">
+              <div className="animate-blink h-3 w-3 rounded-full bg-red-500"></div>
+                   سیستم در حال پاسخگویی 
+              </div> : <TypingAnimation text={item.message} />
+           
+           : item.type === messageTypes.text ? (
             <div dangerouslySetInnerHTML={{ __html: item.message }} />
           ) : (
             ""
