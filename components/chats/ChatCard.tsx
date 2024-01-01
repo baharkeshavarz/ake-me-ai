@@ -6,6 +6,7 @@ import VoicePlayer from "../shared/VoicePlayer";
 import { API_URL } from "@/lib/axios";
 import { configInfo, messageTypes } from "@/constants";
 import VideoSinglePlayer from "../shared/VideoSinglePlayer";
+import { loginInfo } from "@/constants/login";
 
 interface ChatCardProps {
   item: ChatMessageResponse;
@@ -38,7 +39,7 @@ const ChatCard = ({ item }: ChatCardProps) => {
           <Logo width={30} height={30} />
         ) : (
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-400 p-1 text-[0.7rem]">
-            ک م
+             {loginInfo[0].user.abbreviation}
           </div>
         )}
       </div>

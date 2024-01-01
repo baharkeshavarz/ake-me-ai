@@ -1,7 +1,9 @@
+import { loginInfo } from "./login";
+
 export const configInfo = {
   drawerLength: "266",
   systemLabel: "سیستم",
-  userLabel: "شما",
+  userLabel: loginInfo[0].user.name,
 };
 
 export const roles = {
