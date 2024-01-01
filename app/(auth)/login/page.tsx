@@ -30,7 +30,7 @@ export default function Login() {
       
     const onSubmit: SubmitHandler<FormData> = (data) => {
       toast.success(`کاربر گرامی، ${loginInfo[0].user.name} خوش آمدید`)
-      router.push("/");
+      router.push("/chat/1");
     };
 
   return (

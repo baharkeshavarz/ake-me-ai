@@ -48,7 +48,7 @@ const ContextVideoCard = ({ items, setHolograms, changeHandler }: ContextVideoCa
         {isCapturing 
           ? <WebcamVideo setIsCapturing={setIsCapturing}  holograms={items} setHolograms={setHolograms}/>
           : (
-              <div className="flex h-[200px] w-full">
+              <div className="flex h-[300px] w-full">
                   {videoId && <VideoPlayer
                                    videoId={videoId} 
                                    width="100%"
@@ -63,7 +63,7 @@ const ContextVideoCard = ({ items, setHolograms, changeHandler }: ContextVideoCa
             onClick={handleUploadNew}
             className="background-dark400_light900 text-light700_dark500 flex-center min-w-fit rounded-lg p-3 text-sm" 
          >
-          {isCapturing && <PulseLoading color="white" size="16"/>}
+          {isCapturing && <PulseLoading color="white" size={16}/>}
           آپلود ویدیوی من
         </button> 
         {!isCapturing && (

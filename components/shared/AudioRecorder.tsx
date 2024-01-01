@@ -8,7 +8,6 @@ import resumeSVG from "../../public/assets/icons/play.svg";
 import saveSVG from "../../public/assets/icons/save.svg";
 import closeSVG from "../../public/assets/icons/close.svg";
 import toast from 'react-hot-toast';
-import useMessageStore from '@/hooks/useMessages';
 import { configInfo, contexts, messageTypes } from '@/constants';
 import { useRouter } from 'next/navigation';
 import SpinningLoading from './loader/SpinningLoading';
@@ -43,8 +42,8 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
 
 
   const updateObjectInList = (updatedObject: any, index: number) => {
-    setList((prevList) =>
-      prevList.map((obj) => {
+    setList((prevList: any) =>
+      prevList.map((obj: any) => {
         if (obj.id === index) {
           return { ...obj, ...updatedObject };
         }
@@ -129,7 +128,7 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
 
 		if (response.ok) {
       // Add user's message to list
-      setList(prevList => [...prevList, {
+      setList((prevList: any) => [...prevList, {
         id: "",
         type: messageTypes.text,
         message: response.transcript,
@@ -138,7 +137,7 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
 
       // Call API
       try {
-        setList(prevList => [...prevList, {
+        setList((prevList: any) => [...prevList, {
           id: randId,
           type: messageTypes.text,
           message: "",

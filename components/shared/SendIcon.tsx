@@ -12,7 +12,6 @@ import {
 import ContextSelector from "../context/ContextSelector";
 import useThemeStore from "@/store/useThemeStore";
 import { getChatByFaq, getChatByProfile } from "@/actions/get-chat";
-import useMessageStore from "@/hooks/useMessages";
 import { getSendButtonColor, randomNumberInRange } from "@/lib/utils";
 import { configInfo, contexts, messageTypes } from "@/constants";
 import { getVoiceByQuestion } from "@/actions/get-voice";
@@ -40,7 +39,7 @@ const SendIcon = ({
   setList,
 }: SendIconProps) => {
   const theme = useThemeStore((state: any) => state.theme);
-  const { inx, onSet} = useChatNumber();
+  const {inx, onSet} = useChatNumber();
   const [error, setError] = useState(false);
   const [openBox, setOpenBox] = useState(false);
   const { contextValues } = useMessageContext();
@@ -50,8 +49,8 @@ const SendIcon = ({
 
   const updateObjectInList = (updatedObject: any, index: number) => {
     // console.log("itemIndexToUpdate in updateObjectInList:::", itemIndexToUpdate);
-    setList((prevList) =>
-      prevList.map((obj) => {
+    setList((prevList: any) =>
+      prevList.map((obj: any) => {
         if (obj.id === index) {
           return { ...obj, ...updatedObject };
         }
@@ -100,7 +99,7 @@ const SendIcon = ({
 
       setItemIndexToUpdate(randId);
       // Add user's message to list
-      setList(prevList => [...prevList, {
+      setList((prevList: any) => [...prevList, {
         id: "",
         type: messageTypes.text,
         message: userQuestion,
@@ -110,7 +109,7 @@ const SendIcon = ({
       onSet(randId);
       // Call API
       try {
-        setList(prevList => [...prevList, {
+        setList((prevList: any) => [...prevList, {
           id: randId,
           type: messageTypes.text,
           message: "",
@@ -145,14 +144,14 @@ const SendIcon = ({
           // call api for getting the voice
           voiceResponse = await getVoiceByQuestion(response.data.msg);
           if (voiceResponse?.url) {
-            setList(prevList => [...prevList, {
+            setList((prevList: any) => [...prevList, {
               id: voiceResponse!.unique_id,
               type: messageTypes.voice,
               message: "voice",
               creator: configInfo.systemLabel,
             }]);
 
-            setList(prevList => [...prevList, {
+            setList((prevList: any) => [...prevList, {
               id: voiceResponse!.unique_id,
               type: messageTypes.video,
               message: "video",
@@ -172,7 +171,7 @@ const SendIcon = ({
   const handleSendQuestion = async () => {
     console.log("handleSendQuestion")
 
-    setList(prevList => [...prevList, {
+    setList((prevList: any) => [...prevList, {
       id: "",
       type: messageTypes.text,
       message: question,
@@ -193,17 +192,14 @@ const SendIcon = ({
       );
     }
 
-    setList(prevList => [...prevList, {
-      id: "",
+    setList((prevList: any) => [...prevList, {
+      id: randId,
       type: messageTypes.text,
       message: "",
       creator: configInfo.systemLabel,
     }]);
 
-    // call api for getting the voice
-    voiceResponse = await getVoiceByQuestion(question);
-
-    if (response?.data) {
+     if (response?.data) {
       updateObjectInList({
         id: response.data.response_id,
         type: messageTypes.text,
@@ -211,18 +207,22 @@ const SendIcon = ({
         creator: configInfo.systemLabel,
       }, randId);
 
+      // call api for getting the voice
+      voiceResponse = await getVoiceByQuestion(response.data.msg);
+
       toast.success(systemChatSuccess.message, {
         id: textNotification,
       });
 
       if (voiceResponse?.url) {
-        setList(prevList => [...prevList, {
+        setList((prevList: any) => [...prevList, {
           id: voiceResponse!.unique_id,
           type: messageTypes.voice,
           message: "voice",
           creator: configInfo.systemLabel,
         }]);
-        setList(prevList => [...prevList, {
+        
+        setList((prevList: any) => [...prevList, {
           id: voiceResponse!.unique_id,
           type: messageTypes.video,
           message: "video",

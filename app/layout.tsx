@@ -18,8 +18,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-            <script src="https://cdn.webrtc-experiment.com/MediaStreamRecorder.js" defer/>
-
       <body>
         <ToastProvider />
         {children}

@@ -20,7 +20,7 @@ const NewChat = () => {
   const onClickNew = () => {
     removeList();
     onRemove();
-    router.push("/")
+    router.push("/chat/1")
   }
 
   return (

@@ -33,7 +33,7 @@ const WebcamVideo = ({ holograms, setIsCapturing, setHolograms }: WebcamVideoPro
   const [fileName, setFileName] = useState("");
 
   const handleDataAvailable = useCallback(({ data }: { data: BlobPart }) => {
-    if (data.size > 0) {
+    if (data) {
       setRecordedChunks((prev) => prev.concat(data as Blob));
     }
   }, [setRecordedChunks]);
@@ -60,7 +60,7 @@ const WebcamVideo = ({ holograms, setIsCapturing, setHolograms }: WebcamVideoPro
   }, [mediaRecorderRef, setCapturing]);
 
   const handleFileUpload = useCallback(
-    async (event: React.ChangeEvent<HTMLInputElement>) =>  {
+    async (event: any) =>  {
       let textNotification = "";
       if (fileName === "") {
          toast.error("!اسم فایلت رو انتخاب کن");

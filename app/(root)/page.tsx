@@ -1,10 +1,6 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-
 export default function Home() {
-  const router = useRouter();
-  router.push("/chat/1");
+  // const router = useRouter();
+  // router.push("/chat/1");
   return null;
 
   // return (

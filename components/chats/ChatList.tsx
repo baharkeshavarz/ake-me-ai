@@ -1,17 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import MessageCard from "./ChatCard";
-import useMessageStore from "@/hooks/useMessages";
+import { ChatMessageResponse } from "@/types";
 
 type ChatListProps = {
   chatId: string;
-  list: any;
+  list: ChatMessageResponse[];
   setList: any;
 };
 
 const ChatList = ({ chatId, list }: ChatListProps) => {
-  const { chatList } = useMessageStore();
   return (
     <div className="flex-1">
       {list.map((message, index) => (

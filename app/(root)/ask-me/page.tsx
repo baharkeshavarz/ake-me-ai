@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 const AskMe = () => {
   return (
     <>
-      <PulseLoading size="22" color="green" />
+      <PulseLoading size={22} color="green" />
       <SpinningLoading />
       <div className="text-dark400_light900 flex justify-end px-5 py-3">
         <div className="flex-1 px-2">

@@ -2,11 +2,11 @@
 import { PulseLoader } from 'react-spinners'
 
 interface PulseLoadingProps {
-  size?: string;
+  size?: number;
   color?: string;
 }
 
-const PulseLoading = ({ size= "18", color= "black"}: PulseLoadingProps) => {
+const PulseLoading = ({ size= 18, color= "black"}: PulseLoadingProps) => {
   return (
     <div className="flex-center">
         <PulseLoader size={size} color={color} />
