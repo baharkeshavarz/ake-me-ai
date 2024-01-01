@@ -44,7 +44,6 @@ const SendIcon = ({
   const [openBox, setOpenBox] = useState(false);
   const { contextValues } = useMessageContext();
   const [itemIndexToUpdate, setItemIndexToUpdate] = useState(0);
-  console.log("lit in SendIcon:::", list);
   let randId = 0;
 
   const updateObjectInList = (updatedObject: any, index: number) => {

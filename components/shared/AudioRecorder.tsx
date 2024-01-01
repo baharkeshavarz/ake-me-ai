@@ -1,4 +1,4 @@
-import { uploadVoiceToGetTransscribe } from '@/actions/get-voice';
+import { getVoiceByQuestion, uploadVoiceToGetTransscribe } from '@/actions/get-voice';
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 
@@ -37,6 +37,7 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
   let timerInterval: any = null;
   let systemResponse: any = null;
   let response: any = null;
+  let voiceResponse: any = null;
   const mimeType = "audio/wav";
   let randId = 0;
 
@@ -176,6 +177,24 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
       setLoading(false);
       handleCancelRecordingClick();
       router.push("/chat/1");
+      // call api for getting the voice
+      voiceResponse = await getVoiceByQuestion(systemResponse.data.msg);
+      if (voiceResponse?.url) {
+        setList((prevList: any) => [...prevList, {
+          id: voiceResponse!.unique_id,
+          type: messageTypes.voice,
+          message: "voice",
+          creator: configInfo.systemLabel,
+        }]);
+
+        setList((prevList: any) => [...prevList, {
+          id: voiceResponse!.unique_id,
+          type: messageTypes.video,
+          message: "video",
+          creator: configInfo.systemLabel,
+        }]);
+      }
+
 		} else {
       toast.error(response.transcript);
       handleCancelRecordingClick();
