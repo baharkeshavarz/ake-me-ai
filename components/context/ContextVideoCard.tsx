@@ -36,6 +36,7 @@ const ContextVideoCard = ({ items, setHolograms, changeHandler }: ContextVideoCa
         const filteredHolograms = items.filter(hologram => hologram.unique_id !== uniqueId ? hologram : "");
         setHolograms([...filteredHolograms]);
         toast.success("فایل ویدثو حذف شد");
+        setVideoId(items[0].unique_id || "");
       }
     } catch (error) {
       toast.error("توی حذف ویدثو مشکلی پیش اومده. دوباره تلاش کن");

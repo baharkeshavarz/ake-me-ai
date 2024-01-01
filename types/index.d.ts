@@ -1,3 +1,4 @@
+import { boolean } from "zod";
 import { messageTypes, roles } from "../constants";
 
 /* General interfaces */
@@ -22,14 +23,8 @@ export interface URLProps {
 export interface FaqItem {
   id: number;
   faq: string;
+  name: string;
 }
-
-/* Hologram */
-// export interface HologramItemResponse {
-//   id: number;
-//   name: string;
-//   unique_id: string;
-// }
 
 export interface HologramItem {
   id: number;
@@ -42,6 +37,7 @@ export interface HologramItem {
 export interface ProfileItem {
   id: number;
   profile: string;
+  name: string;
 }
 
 /* Chat */
@@ -52,6 +48,7 @@ export interface ChatFaq {
 
 export interface ChatResponse {
   response: string;
+  msg: string;
   response_id: string;
 }
 
@@ -89,4 +86,9 @@ export interface historyMessageItem {
   id: string;
   title: string;
   content: historyMessages[];
+}
+
+export interface transcriptResponse {
+  ok: boolean;
+  transcript: string;
 }

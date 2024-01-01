@@ -8,8 +8,10 @@ import VoicePlayer from "@/components/shared/VoicePlayer";
 import SpinningLoading from "@/components/shared/loader/SpinningLoading";
 import PulseLoading from "@/components/shared/loader/PulseLoading";
 import { configInfo } from "@/constants";
+import toast from "react-hot-toast";
 
 const AskMe = () => {
+  toast.success("رسته ظولانی");
   return (
     <>
       <PulseLoading size="22" color="green" />

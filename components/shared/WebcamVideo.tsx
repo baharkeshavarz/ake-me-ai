@@ -101,7 +101,7 @@ const WebcamVideo = ({ holograms, setIsCapturing, setHolograms }: WebcamVideoPro
           console.error('Error uploading file:', error);
         }
       }
-    }, [recordedChunks]);
+    }, [recordedChunks, fileName, holograms, setHolograms, setIsCapturing]);
 
 
   const handleCancelCaptureClick = () => {
@@ -114,7 +114,7 @@ const WebcamVideo = ({ holograms, setIsCapturing, setHolograms }: WebcamVideoPro
     const userInput = e.target.value;
     const isValidInput = /^[A-Za-z]+$/.test(userInput);
     if (isValidInput || userInput === '') {
-      setFileName(userInput);
+      setFileName(userInput.toLowerCase());
     }
   };
 

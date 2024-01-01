@@ -19,7 +19,8 @@ const ContextProfileCard = ({ id, title , messages, changeHandler }: ContextProf
            >
                 <RadioButtonComponent
                     id={`${id}-${message.id.toString()}`}
-                    labelText={message.profile}
+                    labelText={message.name}
+                    content={message.profile}
                     name="context-type"
                     value={message.id.toString()}
                     hasHover

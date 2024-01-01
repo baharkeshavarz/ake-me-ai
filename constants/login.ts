@@ -1,5 +1,15 @@
 export const loginInfo = [
-    {
+   {
+    title: "بانک ملت",
+    logo: "bank-mellat.png",
+    user: {
+      username: "bank-mellat@gmail.com",
+      password: "123456",
+      name: "کاربر ملت",
+      abbreviation: "ک م",
+    }
+   },
+   {
         title: "بانک ملی ایران ",
         logo: "bank-melli.png",
         user: {
@@ -9,15 +19,6 @@ export const loginInfo = [
           abbreviation: "ک م",
         }
      },
-    {
-        title: "بانک ملت",
-        logo: "bank-mellat.png",
-        user: {
-          username: "bank-mellat@gmail.com",
-          password: "123456",
-          name: "کاربر ملت",
-          abbreviation: "ک م",
-        }
-      },
+
   ];
   

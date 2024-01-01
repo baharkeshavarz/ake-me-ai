@@ -1,10 +1,14 @@
+import { useMessageContext } from '@/hooks/useMessageContext';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { HiOutlineLogout , HiOutlineViewList } from "react-icons/hi";
 
 const UserProfile = () => {
   const router = useRouter();  
+  const { onRemove } = useMessageContext();
+
   const hanleLogout = () => {
+     onRemove();
      router.push("/login");
   }  
 

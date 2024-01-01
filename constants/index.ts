@@ -1,3 +1,4 @@
+import { string } from "zod";
 import { loginInfo } from "./login";
 
 export const configInfo = {
@@ -91,4 +92,6 @@ export const historyMessageList: any[] = [
     ],
   },
 ];
+
+
 

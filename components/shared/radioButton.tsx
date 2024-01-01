@@ -11,6 +11,7 @@ interface RadioButtonComponentProps {
     labelText: string;
     name: string;
     value: string;
+    content: string;
     hasHover?: boolean;
     changeHandler?: (e: any) => void;
 }
@@ -20,11 +21,12 @@ const RadioButtonComponent = ({
     labelText,
     name,
     value,
+    content,
     hasHover=false,
     changeHandler
     } : RadioButtonComponentProps) => {
   return (
-    <div className="mb-4 flex items-center gap-1">
+    <div className="mb-4 flex items-center gap-1 w-full justify-end">
      {!hasHover
           ? (<label
                 htmlFor={name}
@@ -34,10 +36,10 @@ const RadioButtonComponent = ({
           ) : (
             <HoverCard>
                 <HoverCardTrigger className="text-[0.75rem] hover:cursor-pointer">
-                  {labelText.substring(0, 100)}...
+                  {labelText}
                 </HoverCardTrigger>
                 <HoverCardContent className="background-light850_dark100 w-[700px] text-sm">
-                  {labelText}
+                  {content}
                 </HoverCardContent>
             </HoverCard>
         )

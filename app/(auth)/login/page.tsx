@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from "zod";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const theme = useThemeStore((state: any) => state.theme);
@@ -23,18 +24,19 @@ export default function Login() {
       resolver: zodResolver(schema),
       defaultValues: {
         username: "",
-        password: "",
+        password: ""
       }
     });
       
     const onSubmit: SubmitHandler<FormData> = (data) => {
+      toast.success(`کاربر گرامی، ${loginInfo[0].user.name} خوش آمدید`)
       router.push("/");
     };
 
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
       <div
-        className={`w-full rounded-md p-6 shadow-xl lg:max-w-xl ${
+        className={`w-full rounded-md p-6 shadow-xl lg:max-w-md ${
           theme === "dark" ? "bg-dark-400" : "bg-light-700/5"
         }`}
       >

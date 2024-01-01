@@ -7,6 +7,7 @@ const ToastProvider = () => {
                   reverseOrder={false}
                   position='top-center'
                   toastOptions={{
+                    className: "text-sm",
                     style: {
                       borderRadius: "8px",
                       background: "#333",

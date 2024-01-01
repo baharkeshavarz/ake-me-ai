@@ -1,5 +1,5 @@
 import { uploadVoice, voiceByQuestion } from "@/queries/Voices";
-import { VoiceItem } from "@/types";
+import { VoiceItem, transcriptResponse } from "@/types";
 
 export const getVoiceByQuestion = async(question: string, gender="woman") => {
   return (await voiceByQuestion(question, gender).then(
@@ -10,8 +10,8 @@ export const getVoiceByQuestion = async(question: string, gender="woman") => {
 
 export const uploadVoiceToGetTransscribe = async(file: any) => {
   return (await uploadVoice(file).then(
-    (result) => result
-  ));
+    (result) => result.data
+  )) as transcriptResponse;
 };
 
 

@@ -9,10 +9,11 @@ import saveSVG from "../../public/assets/icons/save.svg";
 import closeSVG from "../../public/assets/icons/close.svg";
 import toast from 'react-hot-toast';
 import useMessageStore from '@/hooks/useMessages';
-import { configInfo, messageTypes } from '@/constants';
+import { configInfo, contexts, messageTypes } from '@/constants';
 import { useRouter } from 'next/navigation';
 import SpinningLoading from './loader/SpinningLoading';
 import { useMessageContext } from '@/hooks/useMessageContext';
+import { getChatByFaq, getChatByProfile } from '@/actions/get-chat';
 
 
 const AudioRecorder = () => {
@@ -31,6 +32,8 @@ const AudioRecorder = () => {
 
   const router = useRouter();
   let timerInterval: any = null;
+  let systemResponse: any = null;
+  let response: any = null;
   const mimeType = "audio/wav";
 
   const getMicrophonePermission = async () => {
@@ -69,7 +72,6 @@ const AudioRecorder = () => {
 
     // Handle Timer
     const startTime = Date.now() - elapsedTime; // Adjust the start time based on the current elapsed time
-    console.log("startTime",startTime);
     timerInterval = setInterval(() => {
     const currentTime = Date.now();
     setElapsedTime(currentTime - startTime);
@@ -104,31 +106,68 @@ const AudioRecorder = () => {
     try {
       const blob = new Blob(audioBlob);
       const formData = new FormData();
-      formData.append('file', blob, "test.wav");
-     	const response = await uploadVoiceToGetTransscribe(formData);
-		if (response) {
-			console.log(response);
+      formData.append('file', blob, "transcribe.wav");
+     	response = await uploadVoiceToGetTransscribe(formData);
+
+		if (response.ok) {
       // Add user's message to list
       addMessage({
         id: "",
         type: messageTypes.text,
-        message: "question",
+        message: response.transcript,
         creator: configInfo.userLabel,
       });
 
-      addMessage({
-        id: "",
-        type: messageTypes.text,
-        message: "پاسخ سیستم به کاربر",
-        creator: configInfo.systemLabel,
-      });
+      // Call API
+      try {
+        if (contextValues.contextType === contexts.faq) {
+          systemResponse = await getChatByFaq(
+            Number(contextValues.contextId),
+            response.transcript
+          );
+        } else {
+          systemResponse = await getChatByProfile(
+            Number(contextValues.contextId),
+            response.transcript
+          );
+        }
+
+        if (systemResponse?.data) {
+          addMessage({
+            id: systemResponse.data.response_id,
+            type: messageTypes.text,
+            message: systemResponse.data.msg,
+            creator: configInfo.systemLabel,
+          });
+
+        //  toast.success(systemChatSuccess.message, {
+        //       id: textNotification,
+        //   });
+       //   }
+        }
+      } catch (error) {
+      } finally {
+        //
+      }
+
+
+
+      // addMessage({
+      //   id: "",
+      //   type: messageTypes.text,
+      //   message: response.transcript,
+      //   creator: configInfo.systemLabel,
+      // });
       setLoading(false);
       handleCancelRecordingClick();
       router.push("/chat/1");
-		}
+		} else {
+      toast.error(response.transcript);
+      handleCancelRecordingClick();
+    }
     } catch (error) {
-        toast.error("خطایی رخ داده، دوباره تلاش کن");
-        setLoading(false);
+       toast.error(response.transcript);
+       handleCancelRecordingClick();
     }
   };
 
@@ -139,6 +178,7 @@ const AudioRecorder = () => {
     setAudio(null);
     setAudioChunks([]);
     setShowMic(true);
+    setLoading(false);
   }
 
   // Reset elapsed time when the recording status changes

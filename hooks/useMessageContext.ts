@@ -10,7 +10,7 @@ type MessageContextStore = {
 const initialValue = {
     contextType: "",
     contextId: 0,
-     hologram: ""
+    hologram: ""
 };
 
 export const useMessageContext = create<MessageContextStore>((set) => ({
