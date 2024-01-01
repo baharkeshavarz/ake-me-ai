@@ -12,6 +12,7 @@ import useMessageStore from '@/hooks/useMessages';
 import { configInfo, messageTypes } from '@/constants';
 import { useRouter } from 'next/navigation';
 import SpinningLoading from './loader/SpinningLoading';
+import { useMessageContext } from '@/hooks/useMessageContext';
 
 
 const AudioRecorder = () => {
@@ -26,12 +27,17 @@ const AudioRecorder = () => {
   const [showMic, setShowMic] = useState(false);
   const {chatList, addMessage } = useMessageStore();
   const [loading, setLoading] = useState(false);
+  const { contextValues } = useMessageContext();
 
   const router = useRouter();
   let timerInterval: any = null;
   const mimeType = "audio/wav";
 
   const getMicrophonePermission = async () => {
+    if(!contextValues.contextType) {
+      toast.error("!اول زمینه ی سوالت را انتخاب کن");
+      return;
+    }
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         audio: true,
@@ -116,6 +122,8 @@ const AudioRecorder = () => {
         message: "پاسخ سیستم به کاربر",
         creator: configInfo.systemLabel,
       });
+      setLoading(false);
+      handleCancelRecordingClick();
       router.push("/chat/1");
 		}
     } catch (error) {
