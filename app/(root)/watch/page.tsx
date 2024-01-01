@@ -1,6 +1,6 @@
 "use client";
 
-import AudioRecorder from "@/components/shared/AudioRecorder_oog";
+import AudioRecorder from "@/components/shared/AudioRecorder";
 
 const page = () => {
   return <>

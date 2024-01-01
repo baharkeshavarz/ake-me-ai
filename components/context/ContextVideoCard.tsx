@@ -60,7 +60,7 @@ const ContextVideoCard = ({ items, setHolograms, changeHandler }: ContextVideoCa
       <div className="rtl-grid grid w-full grid-cols-1 gap-3 py-2 sm:grid-cols-4 lg:grid-cols-4">
         <button
             onClick={handleUploadNew}
-            className="rounded-lg p-3 background-dark400_light900 text-sm text-light700_dark500 flex-center min-w-fit" 
+            className="background-dark400_light900 text-light700_dark500 flex-center min-w-fit rounded-lg p-3 text-sm" 
          >
           {isCapturing && <PulseLoading color="white" size="16"/>}
           آپلود ویدیوی من
@@ -85,7 +85,7 @@ const ContextVideoCard = ({ items, setHolograms, changeHandler }: ContextVideoCa
                  </button>
                  {item.role === roles.USER && (
                             <button 
-                               className="bg-red-500 text-white flex-center p-2 gap-x-1 rounded-lg hover:bg-red-500/80"
+                               className="flex-center gap-x-1 rounded-lg bg-red-500 p-2 text-white hover:bg-red-500/80"
                                onClick={() => handleDeleterHologram(item.unique_id)}
                              >
                             <DeleteIcon/>

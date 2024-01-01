@@ -11,7 +11,7 @@ interface ContextProfileCardProps {
 const ContextProfileCard = ({ id, title , messages, changeHandler }: ContextProfileCardProps) => {
   return (
     <div className="flex w-full flex-col items-end justify-start px-5 pb-5">
-      <h3 className="base-semibold py-2 text-dark100_light900">{title}</h3>
+      <h3 className="base-semibold text-dark100_light900 py-2">{title}</h3>
        {messages.map((message, index) =>
           <div 
                key={index}

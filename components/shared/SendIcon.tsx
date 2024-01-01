@@ -154,7 +154,7 @@ const SendIcon = ({
         creator: configInfo.systemLabel,
       });
 
-      toast.success("سیستم جوابت رو داد", {
+      toast.success("پاسخ شما دریافت شد", {
         id: textNotification,
       });
 

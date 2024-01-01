@@ -194,4 +194,7 @@
   .shadow-light100_dark200 {
     @apply shadow-light-100 dark:shadow-dark-200;
   }
+  .shadow-icon {
+    @apply shadow-light-400 dark:shadow-dark-400;
+  }
 }

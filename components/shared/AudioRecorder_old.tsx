@@ -1,4 +1,3 @@
-import { uploadVoiceToGetTransscribe } from '@/actions/get-voice';
 import React, { useState, useRef } from 'react';
 
 const mimeType = "data:audio/wav";
@@ -23,12 +22,25 @@ const AudioRecorder: React.FC = () => {
     }
   };
 
+
+  function onMediaSuccess(stream) {
+    console.log("onMediaSuccess");
+    const mediaRecorder = new MediaStreamRecorder(stream);
+    mediaRecorder.mimeType = 'audio/webm'; // audio/webm or audio/ogg or audio/wav
+    mediaRecorder.ondataavailable = function (blob) {
+        // POST/PUT "Blob" using FormData/XHR2
+        const blobURL = URL.createObjectURL(blob);
+        document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
+    };
+    mediaRecorder.start(3000);
+}
+
   const startRecording = async () => {
     setRecordingStatus('recording');
     const media = new MediaRecorder(stream as MediaStream);
     mediaRecorder.current = media;
     mediaRecorder.current.start();
-    let localAudioChunks: Blob[] = [];
+    const localAudioChunks: Blob[] = [];
 
     mediaRecorder.current.ondataavailable = (event) => {
       if (typeof event.data === 'undefined') return;
@@ -50,58 +62,27 @@ const AudioRecorder: React.FC = () => {
           const audioUrl = URL.createObjectURL(audioBlob);
           setAudio(audioUrl);
           setAudioChunks([]);
-          resolve(sendAudioToAPI(audioChunks));
+         // resolve(sendAudioToAPI(audioChunks));
+         resolve(onMediaSuccess(audioChunks));
+         
         };
       }
     });
   };
 
-  const convertBlobToBase64 = (blob:any) => new Promise((resolve, reject) => {
-    const reader = new FileReader;
-    reader.onerror = reject;
-    reader.onload = () => {
-        resolve(reader.result);
-    };
-    reader.readAsDataURL(blob);
-});
-
-const convertBase64ToWav = (base64Data: string) => {
-  // Extract base64 data (excluding the data URI prefix)
-  const binaryData = atob(base64Data.split(',')[1]);
-
-  // Create a Uint8Array from the binary data
-  const uint8Array = new Uint8Array(binaryData.length);
-  for (let i = 0; i < binaryData.length; i++) {
-    uint8Array[i] = binaryData.charCodeAt(i);
-  }
-
-  // Create a Blob from the Uint8Array
-  const blob = new Blob([uint8Array], { type: 'audio/wav' });
-
-  // Create a File object from the Blob
-  return new File([blob], 'converted_audio.wav', { type: 'audio/wav' });
-};
-
-
-
-  const sendAudioToAPI = async (audioBlob: any) => {
-    try {
-      const blob = new Blob(audioBlob);
-      const base64Data = await convertBlobToBase64(blob);
-      console.log(base64Data)
-     const formData = new FormData();
-     const wavFile = convertBase64ToWav(base64Data as string);
-     console.log("wavFile:", wavFile)
-     formData.append('file', wavFile);
-     
-     	const response = await uploadVoiceToGetTransscribe(formData);
-		if (response) {
-			console.log(response)
-		}
-    } catch (error) {
-      console.error('Error sending audio to the API:', error);
-    }
-  };
+  // const sendAudioToAPI = async (audioBlob: any) => {
+  //   try {
+	//  const blob = new Blob(audioBlob, {type: "data:audio/wav"});
+  //     const formData = new FormData();
+  //     formData.append('file', blob, 'test.wav');
+  //    	const response = await uploadVoiceToGetTransscribe(formData);
+	// 	if (response) {
+	// 		console.log(response)
+	// 	}
+  //   } catch (error) {
+  //     console.error('Error sending audio to the API:', error);
+  //   }
+  // };
 
   return (
     <div>

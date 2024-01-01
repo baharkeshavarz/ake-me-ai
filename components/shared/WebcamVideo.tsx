@@ -128,7 +128,7 @@ const WebcamVideo = ({ holograms, setIsCapturing, setHolograms }: WebcamVideoPro
         ref={webcamRef}
         videoConstraints={videoConstraints}
       />
-      <div className="flex-center p-3 gap-x-2 w-full">
+      <div className="flex-center w-full gap-x-2 p-3">
             <HoverCard>
               <HoverCardTrigger className="text-[0.75rem] hover:cursor-pointer">
               <input
@@ -136,10 +136,10 @@ const WebcamVideo = ({ holograms, setIsCapturing, setHolograms }: WebcamVideoPro
                  placeholder="اسم فایلت رو انتخاب کن"
                  value={fileName}
                  onChange={handleInputChange}
-                 className="rounded-md border text-center bg-white px-4 py-2 text-gray-700 focus:border-gray-400 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
+                 className="rounded-md border bg-white px-4 py-2 text-center text-gray-700 focus:border-gray-400 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
                />
               </HoverCardTrigger>
-                <HoverCardContent className="background-dark400_light900 text-light700_dark500 text-sm w-fit text-center">
+                <HoverCardContent className="background-dark400_light900 text-light700_dark500 w-fit text-center text-sm">
                    .نام فایل شما باید انگلیسی و به صورت تک کلمه ای باشد 
                   <br/>
                   .از خط فاصله استفاده نکنید
@@ -148,21 +148,21 @@ const WebcamVideo = ({ holograms, setIsCapturing, setHolograms }: WebcamVideoPro
           
             <button
                onClick={handleCancelCaptureClick}
-               className="background-strop_upload rounded-lg py-2.5 px-4"
+               className="background-strop_upload rounded-lg px-4 py-2.5"
             >
              !منصرف شدم
            </button>
           {capturing ? (
             <button
                onClick={handleStopCaptureClick}
-               className="background-strop_upload rounded-lg py-2.5 px-4"
+               className="background-strop_upload rounded-lg px-4 py-2.5"
             >
             توقف ضبط
            </button>
           ) : (
             <button 
                onClick={handleStartCaptureClick}
-               className="background-upload rounded-lg py-2 px-4"
+               className="background-upload rounded-lg px-4 py-2"
             >
             شروع ضبط
            </button>
@@ -171,7 +171,7 @@ const WebcamVideo = ({ holograms, setIsCapturing, setHolograms }: WebcamVideoPro
           {recordedChunks.length > 0 && (
             <button 
                 onClick={handleFileUpload}
-                className="background-send_upload rounded-lg py-2 px-4 flex-center gap-x-2 min-w-fit"
+                className="background-send_upload flex-center min-w-fit gap-x-2 rounded-lg px-4 py-2"
                 >
                {isUploading && <SpinningLoading width="6" height="6" />}
                 ارسال فایل

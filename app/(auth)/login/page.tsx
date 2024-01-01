@@ -62,7 +62,7 @@ export default function Login() {
               {...register('username')}
               className="mt-2 block w-full rounded-md border bg-white px-4 py-2 text-gray-700 focus:border-gray-400 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
             />
-              {errors.username && <p className="text-red-500 text-[0.7rem] flex justify-end items-center py-2">{errors.username.message}</p>}
+              {errors.username && <p className="flex items-center justify-end py-2 text-[0.7rem] text-red-500">{errors.username.message}</p>}
            </div>
           <div className="mb-2">
             <label
@@ -78,7 +78,7 @@ export default function Login() {
               {...register('password')}
               className="mt-2 block w-full rounded-md border bg-white px-4 py-2 text-gray-700 focus:border-gray-400 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
             />
-            {errors.password && <p className="text-red-500 text-[0.7rem] flex justify-end items-center py-2">{errors.password.message}</p>}
+            {errors.password && <p className="flex items-center justify-end py-2 text-[0.7rem] text-red-500">{errors.password.message}</p>}
           </div>
           <Link
             href="/forget"
