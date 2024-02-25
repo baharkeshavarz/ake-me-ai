@@ -16,15 +16,23 @@
   }
 
   .background-strop_upload {
-    @apply bg-red-500 hover:bg-red-700 !important;
+    @apply bg-red-500 hover:bg-red-700 text-black/60 hover:text-white !important;
   }
 
   .background-upload {
-    @apply bg-green-500 hover:dark:bg-green-700 !important;
+    @apply bg-green-500 hover:bg-green-700 text-black/60 hover:text-white !important;
   }
 
   .background-send_upload {
-    @apply bg-primary-500 hover:dark:bg-primary-400 !important;
+    @apply bg-primary-500 hover:bg-primary-400 text-black/60 hover:text-white !important;
+  }
+
+  .background-system-setting {
+    @apply bg-dark-300 hover:bg-dark-400 text-white/90 hover:text-white/70 !important;
+  }
+
+  .background-dark400_light900_nohover {
+    @apply bg-dark-400 dark:bg-light-900  !important;
   }
 
   .text-dark100_light900 {
@@ -115,6 +123,14 @@
     @apply text-[20px] font-bold leading-[26px];
   }
 
+  .h4-bold {
+    @apply text-[16px] font-bold leading-[26px];
+  }
+
+  .h5-bold {
+    @apply text-[16px] font-bold leading-[26px];
+  }
+
   .h3-semibold {
     @apply text-[20px] font-semibold leading-[24.8px];
   }
@@ -124,7 +140,7 @@
   }
 
   .base-semibold {
-    @apply text-[15px] font-semibold leading-[25.2px];
+    @apply text-[14px] font-semibold leading-[25.2px];
   }
 
   .base-bold {
@@ -132,7 +148,7 @@
   }
 
   .paragraph-regular {
-    @apply text-[16px] font-normal leading-[22.4px];
+    @apply text-[14px] font-normal leading-[22.4px] !important;
   }
 
   .paragraph-medium {
@@ -157,6 +173,10 @@
 
   .small-regular {
     @apply text-[12px] font-normal leading-[15.6px];
+  }
+
+  .small-notification {
+    @apply text-[11px] font-medium leading-[13px] !important;
   }
 
   .small-medium {

@@ -30,7 +30,7 @@ export interface HologramItem {
   id: number;
   name: string;
   unique_id: string;
-  role: roles.SYSTEM | roles.USER
+  role: roles.SYSTEM | roles.USER;
 }
 
 /* Profile */
@@ -40,16 +40,42 @@ export interface ProfileItem {
   name: string;
 }
 
+export interface ProfileResponse {
+  ok: boolean;
+  msg: string;
+}
+
+export interface ProfileHistory {
+  profile_id: number;
+}
+
+
+export interface ProfileHistoryResponse{
+  data: ProfileHistoryResponse;
+  role: string;
+  content: {
+    type: string;
+    value: string;
+  }[];
+};
+
+
 /* Chat */
 export interface ChatFaq {
-  faq_id: number;
+  chat_id: number;
   question: string;
+}
+
+export interface FaqResponse {
+  ok: boolean;
+  msg: string;
 }
 
 export interface ChatResponse {
   response: string;
   msg: string;
   response_id: string;
+  elapsed_time: float;
 }
 
 export interface ChatProfile {
@@ -62,6 +88,10 @@ export interface ChatMessageResponse {
   type: messageTypes.text | messageTypes.voice | messageTypes.video;
   message: string;
   creator: string;
+  voiceId?: string;
+  videoId?: string;
+  elapsedTime?: float;
+  isHistory?: boolean,
 }
 
 /* Voice */
@@ -75,6 +105,7 @@ export interface ContextValues {
   contextType: string;
   contextId: number;
   hologram: string;
+  selectedProfile: number;
 }
 
 export interface historyMessages {
@@ -92,3 +123,37 @@ export interface transcriptResponse {
   ok: boolean;
   transcript: string;
 }
+
+/* Setting */
+export interface ProjectSetting {
+  id: string;
+  name: string;
+  user: {
+    id: string;
+    role: string;
+    name: string;
+    firstProfile?: number;
+    profileContent: string;
+    historyList: ChatMessageResponse[]; 
+  };
+  modelType: number;
+  modelTypeMsg: string;
+}
+
+export interface ProjectItem {
+  id: string;
+  name: string;
+  filename: string;
+}
+
+export interface UserItem {
+  value: number;
+  label: string;
+  content: string;
+}
+
+
+export interface ChatModelType {
+  model: number;
+}
+

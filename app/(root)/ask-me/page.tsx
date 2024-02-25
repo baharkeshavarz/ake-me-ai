@@ -25,7 +25,7 @@ const AskMe = () => {
           </p>
         </div>
         <div>
-          <Logo width={30} height={30} />
+          <Logo width={100} height={100} />
         </div>
       </div>
 

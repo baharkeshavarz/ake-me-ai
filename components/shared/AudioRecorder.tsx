@@ -2,10 +2,9 @@ import { getVoiceByQuestion, uploadVoiceToGetTransscribe } from '@/actions/get-v
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 
-import micSVG from "../../public/assets/icons/mic.svg";
 import pauseSVG from "../../public/assets/icons/pause.svg";
 import resumeSVG from "../../public/assets/icons/play.svg";
-import saveSVG from "../../public/assets/icons/save.svg";
+
 import closeSVG from "../../public/assets/icons/close.svg";
 import toast from 'react-hot-toast';
 import { configInfo, contexts, messageTypes } from '@/constants';
@@ -14,13 +13,14 @@ import SpinningLoading from './loader/SpinningLoading';
 import { useMessageContext } from '@/hooks/useMessageContext';
 import { getChatByFaq, getChatByProfile } from '@/actions/get-chat';
 import { randomNumberInRange } from '@/lib/utils';
+import { Mic, Save } from 'lucide-react';
+import useThemeStore from '@/store/useThemeStore';
 
 interface AudioRecorderProps {
-  list: any,
   setList: any,
 }
 
-const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
+const AudioRecorder = ({ setList }: AudioRecorderProps) => {
   const [permission, setPermission] = useState(false);
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const [recordingStatus, setRecordingStatus] = useState('inactive');
@@ -32,9 +32,9 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
   const [showMic, setShowMic] = useState(false);
   const [loading, setLoading] = useState(false);
   const { contextValues } = useMessageContext();
+  const theme = useThemeStore((state: any) => state.theme);
 
   const router = useRouter();
-  let timerInterval: any = null;
   let systemResponse: any = null;
   let response: any = null;
   let voiceResponse: any = null;
@@ -52,7 +52,6 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
       })
     );
   };
-
 
   const getMicrophonePermission = async () => {
     if(!contextValues.contextType) {
@@ -87,13 +86,6 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
     };
 
     setAudioChunks(localAudioChunks);
-
-    // Handle Timer
-    const startTime = Date.now() - elapsedTime; // Adjust the start time based on the current elapsed time
-    timerInterval = setInterval(() => {
-    const currentTime = Date.now();
-    setElapsedTime(currentTime - startTime);
-    }, 1000);
   };
 
   const stopRecording = async () => {
@@ -101,9 +93,6 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
     mediaRecorder.current?.stop();
     // Handle Timer
     setShowTimer(false); 
-    if (timerInterval) {
-      clearInterval(timerInterval);
-    }
 
     await new Promise<void>((resolve) => {
       if (mediaRecorder.current) {
@@ -143,12 +132,14 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
           type: messageTypes.text,
           message: "",
           creator: configInfo.systemLabel,
+          voiceId: "",
+          videoId: ""
         }]);
 
         if (contextValues.contextType === contexts.faq) {
           systemResponse = await getChatByFaq(
             Number(contextValues.contextId),
-            response.transcript
+            response.transcript,
           );
         } else {
           systemResponse = await getChatByProfile(
@@ -163,12 +154,8 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
             type: messageTypes.text,
             message: systemResponse.data.msg,
             creator: configInfo.systemLabel,
+            elapsedTime: Math.round(systemResponse.data.elapsed_time * 100) / 100,
           }, randId);
-         
-        //  toast.success(systemChatSuccess.message, {
-        //       id: textNotification,
-        //   });
-       //   }
         }
       } catch (error) {
       } finally {
@@ -180,19 +167,13 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
       // call api for getting the voice
       voiceResponse = await getVoiceByQuestion(systemResponse.data.msg);
       if (voiceResponse?.url) {
-        setList((prevList: any) => [...prevList, {
-          id: voiceResponse!.unique_id,
-          type: messageTypes.voice,
-          message: "voice",
-          creator: configInfo.systemLabel,
-        }]);
-
-        setList((prevList: any) => [...prevList, {
-          id: voiceResponse!.unique_id,
-          type: messageTypes.video,
-          message: "video",
-          creator: configInfo.systemLabel,
-        }]);
+        updateObjectInList(
+          {
+            voiceId: voiceResponse!.unique_id,
+            videoId: voiceResponse!.unique_id,
+          },
+          systemResponse.data.response_id
+        );
       }
 
 		} else {
@@ -215,26 +196,40 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
     setLoading(false);
   }
 
-  // Reset elapsed time when the recording status changes
   useEffect(() => {
-    setElapsedTime(0);
-  }, [recordingStatus]);
-
+    let timerInterval: any = null;
+    if (recordingStatus === "recording") {
+        // Handle Timer
+        const startTime = Date.now() - elapsedTime;
+        timerInterval = setInterval(() => {
+        const currentTime = Date.now();
+        setElapsedTime(currentTime - startTime);
+        }, 1000);
+    }
+     return () => clearInterval(timerInterval);
+  }, [recordingStatus, elapsedTime]);
+  
   if (loading) return <div className="flex-center h-full"><SpinningLoading /></div>;
+
   return (
         <>
-          {!permission || showMic ? (
-            <Image
-                src={recordingStatus === "inactive" ? micSVG : saveSVG}
-                className="mt-4 cursor-pointer pt-0.5"
-                width={20}
-                height={20}
-                onClick={recordingStatus ? () => getMicrophonePermission() : startRecording}
-                alt="دسترسی به میکروفن"
+          {(!permission || showMic) && recordingStatus === "inactive" && 
+            <Mic 
+                  className="mt-4 cursor-pointer pt-0.5"
+                  onClick={recordingStatus ? () => getMicrophonePermission() : startRecording}
+                  color={theme === "light" ? "#000000" : "#f3f3f3"}
             />
-          ) : null}
+          }
 
-          {permission && recordingStatus === 'inactive' && !showMic ? (
+         {(!permission || showMic) && recordingStatus !== "inactive" && 
+            <Save 
+                 className="mt-4 cursor-pointer pt-0.5"
+                 onClick={recordingStatus ? () => getMicrophonePermission() : startRecording}
+                 color={theme === "light" ? "#000000" : "#f3f3f3"}
+           />
+          }
+
+         {permission && recordingStatus === 'inactive' && !showMic ? (
            <div className="flex-center gap-x-1">
               <div className="rounded-full bg-primary-500 p-4 shadow-md shadow-slate-400">
                 <Image
@@ -272,7 +267,7 @@ const AudioRecorder = ({list, setList}: AudioRecorderProps) => {
 
           {showTimer && (
             <div className="flex-center">
-              <div className="flex-center gap-x-2 px-2">
+              <div className="flex-center gap-x-2 px-2 text-dark400_light900">
                   <div className="animate-blink h-3 w-3 rounded-full bg-red-500"></div>
                   {formatTime(elapsedTime)}
               </div>

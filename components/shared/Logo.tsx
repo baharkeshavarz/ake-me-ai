@@ -1,5 +1,7 @@
+import { gettSettingLogo } from '@/actions/get-setting';
+import { useSetting } from '@/hooks/useSetting';
 import Image from 'next/image'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface LogoProps {
     width: number;
@@ -7,12 +9,31 @@ interface LogoProps {
 }
 
 const Logo = ({ width, height }: LogoProps) => {
+  const { projectInfo } = useSetting();
+  const [logo, setLogo] = useState("");
+
+    // Find the logo
+    useEffect(() => {
+      const getSettingLogo = async () => {
+        try {
+        const response = await gettSettingLogo(projectInfo.id);
+        const data = await response.blob();
+        const logoUrl = URL.createObjectURL(data);
+        setLogo(logoUrl);
+        } catch (error) {
+          console.log("error", error);
+        } 
+      };
+      getSettingLogo();
+    }, [projectInfo]);
+  
+
   return (
     <Image
-       src="/assets/images/site-logo.svg"
+       src={logo}
        width={width}
        height={height}
-       alt="ask ai"
+       alt="سامانه هوشمند"
    />
   )
 }

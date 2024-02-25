@@ -1,20 +1,29 @@
 import { ContextValues } from "@/types";
-import { create } from "zustand"
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 type MessageContextStore = {
-    contextValues: ContextValues,
-    onChange: (item: ContextValues) => void,
-    onRemove: () => void;
-}
-
-const initialValue = {
-    contextType: "",
-    contextId: 0,
-    hologram: ""
+  contextValues: ContextValues;
+  onChangeContext: (item: ContextValues) => void;
+  onRemove: () => void;
 };
 
-export const useMessageContext = create<MessageContextStore>((set) => ({
-   contextValues: initialValue,
-   onChange: (item) => set({ contextValues: item }),
-   onRemove: () => set({contextValues: initialValue}),
-}));
+const initialValue = {
+  contextType: "",
+  contextId: 0,
+  hologram: "",
+  selectedProfile: 0,
+};
+
+export const useMessageContext = create(
+  persist(
+  (set: any) => ({
+      contextValues: initialValue,
+      onChangeContext: (item: ContextValues) => set({ contextValues: item }),
+      onRemove: () => set({ contextValues: initialValue }),
+    }),
+    {
+      name: "context-info",
+    }
+    )
+ );

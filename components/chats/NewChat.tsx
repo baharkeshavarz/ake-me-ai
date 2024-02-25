@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/hover-card"
 import { useRouter } from 'next/navigation';
 import { useMessageContext } from "@/hooks/useMessageContext";
+import { RandomNumberInRange } from "@/lib/utils";
 
 const NewChat = () => { 
   const theme = useThemeStore((state: any) => state.theme);
@@ -19,8 +20,9 @@ const NewChat = () => {
 
   const onClickNew = () => {
     removeList();
-    onRemove();
-    router.push("/chat/1")
+   // onRemove();
+    const randomChatId = RandomNumberInRange(2, 1000);
+    router.push("/chat/" + randomChatId)
   }
 
   return (
@@ -33,7 +35,7 @@ const NewChat = () => {
                className="cursor-pointer"
              />
          </HoverCardTrigger>
-         <HoverCardContent className="background-light850_dark100 text-dark400_light900 max-w-fit p-3 text-sm">
+         <HoverCardContent className="background-light850_dark100 text-dark400_light900 max-w-fit p-2 text-sm">
             چت جدید
          </HoverCardContent>
       </HoverCard>

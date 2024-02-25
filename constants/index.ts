@@ -1,15 +1,18 @@
-import { string } from "zod";
-import { loginInfo } from "./login";
 
 export const configInfo = {
   drawerLength: "266",
   systemLabel: "سیستم",
-  userLabel: loginInfo[0].user.name,
+  userLabel: "",
 };
 
 export const roles = {
   SYSTEM: "system",
   USER: "user",
+};
+
+export const userRoles = {
+  LOGGEDIN: "loggedIn",
+  GUEST: "guest",
 };
 
 export const themes = {
@@ -22,6 +25,12 @@ export const contexts = {
   profile: "profile",
   hologram: "hologram",
 };
+
+export const contextLabels = [
+  { context: "faq", label: "سوالات متداول"},
+  { context: "profile", label: "پروفایل"},
+  { context: "hologram", label: "هولوگرام"},
+];
 
 export const messageTypes = {
   text: "text",
@@ -42,6 +51,18 @@ export const themesList = [
   },
 ];
 
+
+export const modelPrecision = [
+  {
+    value: 0,
+    label: "دقیق اما باحوصله جواب بدم؟",
+  },
+  {
+    value: 1,
+    label: "دقتم رو بیارم پایین که زودتر جواب بدم؟",
+  },
+];
+
 export const historyMessageList: any[] = [
   {
     id: "10",
@@ -49,7 +70,7 @@ export const historyMessageList: any[] = [
     content: [
       {
         id: 100,
-        message: "این یک متن تستی ست",
+        message: "قرض الحسنه پس انداز",
       },
     ],
   },
@@ -59,11 +80,11 @@ export const historyMessageList: any[] = [
     content: [
       {
         id: 101,
-        message: "این یک متن تستی ست",
+        message: "صندوق اجاره ای",
       },
       {
         id: 102,
-        message: "این یک متن تستی ست",
+        message: "تسهیلات بانک ملی",
       },
     ],
   },
@@ -73,11 +94,7 @@ export const historyMessageList: any[] = [
     content: [
       {
         id: 200,
-        message: "این یک متن تستی ست",
-      },
-      {
-        id: 201,
-        message: "این یک متن تستی ست",
+        message: "تسهیلات فروش اقساطی",
       },
     ],
   },
@@ -87,11 +104,16 @@ export const historyMessageList: any[] = [
     content: [
       {
         id: 300,
-        message: "این یک متن تستی ست",
+        message: "سوالات متداول",
+      },
+      {
+        id: 301,
+        message: "سوالات متداول کارکنان",
+      },
+      {
+        id: 302,
+        message: "سوالات متداول کاربران بانک",
       },
     ],
   },
 ];
-
-
-

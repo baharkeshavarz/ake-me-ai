@@ -1,53 +1,50 @@
 "use client";
 
-import { SendHorizontal, StopCircle } from "lucide-react";
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { SendHorizontal } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 
 import ContextSelector from "../context/ContextSelector";
 import useThemeStore from "@/store/useThemeStore";
 import { getChatByFaq, getChatByProfile } from "@/actions/get-chat";
 import { getSendButtonColor, randomNumberInRange } from "@/lib/utils";
-import { configInfo, contexts, messageTypes } from "@/constants";
+import { configInfo, contexts, messageTypes, userRoles } from "@/constants";
 import { getVoiceByQuestion } from "@/actions/get-voice";
 import { useMessageContext } from "@/hooks/useMessageContext";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { systemChatLoading, systemChatSuccess } from "@/constants/general";
 import { useChatNumber } from "@/hooks/useChatNumber";
+import { Input } from "@/components/ui/input";
+import { useSetting } from "@/hooks/useSetting";
 
 interface SendIconProps {
-  question: string;
-  setQuestion: Dispatch<SetStateAction<string>>;
-  setCanAskQuestion: Dispatch<SetStateAction<boolean>>;
   chatId: string;
   list: any;
   setList: any;
+  scrollToButtom: any;
 }
 
-const SendIcon = ({
-  question,
-  setQuestion,
-  setCanAskQuestion,
-  chatId,
-  list,
-  setList,
-}: SendIconProps) => {
+const SendIcon = ({ chatId, list, setList, scrollToButtom }: SendIconProps) => {
   const theme = useThemeStore((state: any) => state.theme);
-  const {inx, onSet} = useChatNumber();
+  const { inx, onSet } = useChatNumber();
   const [error, setError] = useState(false);
   const [openBox, setOpenBox] = useState(false);
   const { contextValues } = useMessageContext();
   const [itemIndexToUpdate, setItemIndexToUpdate] = useState(0);
+  const [canAskQuestion, setCanAskQuestion] = useState(false);
+  const { projectInfo } = useSetting();
   let randId = 0;
+  const params = useSearchParams();
+  const [question, setQuestion] = useState("");
+
+  // Add Faq from the right list as a new question
+  useEffect(() => {
+    if (params.has('q') && params.get('q') != "") {
+        setQuestion(params.get("q")!);
+    }
+  }, [params])
 
   const updateObjectInList = (updatedObject: any, index: number) => {
-    // console.log("itemIndexToUpdate in updateObjectInList:::", itemIndexToUpdate);
     setList((prevList: any) =>
       prevList.map((obj: any) => {
         if (obj.id === index) {
@@ -62,9 +59,9 @@ const SendIcon = ({
   let textNotification = "";
   let userQuestion = question;
 
-  const handleContextClick = () => {
-    setOpenBox((prevOpenBox) => !prevOpenBox);
-  };
+  // const handleContextClick = () => {
+  //   setOpenBox((prevOpenBox) => !prevOpenBox);
+  // };
 
   const closeBoxOnOutsideClick = useCallback(
     (event: MouseEvent) => {
@@ -75,8 +72,9 @@ const SendIcon = ({
     [openBox, setOpenBox]
   );
 
-  const handleSendClick = async () => {
-    console.log("handleSendClick")
+  const handleSendClick = async (e: any) => {
+    console.log("handleSendClick");
+    e.preventDefault();
     randId = randomNumberInRange(100, 1000);
     setCanAskQuestion(false);
     // Send first call in chat accordint to the user's selcetion "profile || faq"
@@ -86,151 +84,206 @@ const SendIcon = ({
 
     if (
       !contextValues.contextType ||
-      !contextValues.contextId ||
       question === ""
     ) {
-      toast.error("زمینه ی سوال و خود سوال رو برام بفرست");
+      toast.error("سوالت رو برام بفرست");
     } else {
-      userQuestion = question;
-      setCanAskQuestion(true);
-      setQuestion("");
-      textNotification = toast.loading(systemChatLoading.message);
-
-      setItemIndexToUpdate(randId);
-      // Add user's message to list
-      setList((prevList: any) => [...prevList, {
-        id: "",
-        type: messageTypes.text,
-        message: userQuestion,
-        creator: configInfo.userLabel,
-      }]);
-
-      onSet(randId);
-      // Call API
-      try {
-        setList((prevList: any) => [...prevList, {
-          id: randId,
-          type: messageTypes.text,
-          message: "",
-          creator: configInfo.systemLabel,
-        }]);
-
-        if (contextValues.contextType === contexts.faq) {
-          response = await getChatByFaq(
-            Number(contextValues.contextId),
-            userQuestion
-          );
-        } else {
-          response = await getChatByProfile(
-            Number(contextValues.contextId),
-            userQuestion
-          );
-        }
-
-        if (response?.data) {
-          updateObjectInList({
-            id: response.data.response_id,
-            type: messageTypes.text,
-            message: response.data.msg,
-            creator: configInfo.systemLabel,
-          }, randId);
-
-         toast.success(systemChatSuccess.message, {
-              id: textNotification,
-          });
-          router.push(`/chat/${chatId}`);
-
-          // call api for getting the voice
-          voiceResponse = await getVoiceByQuestion(response.data.msg);
-          if (voiceResponse?.url) {
-            setList((prevList: any) => [...prevList, {
-              id: voiceResponse!.unique_id,
-              type: messageTypes.voice,
-              message: "voice",
-              creator: configInfo.systemLabel,
-            }]);
-
-            setList((prevList: any) => [...prevList, {
-              id: voiceResponse!.unique_id,
-              type: messageTypes.video,
-              message: "video",
-              creator: configInfo.systemLabel,
-            }]);
-          }
-        }
-      } catch (error) {
-        setError(true);
-      } finally {
-        setError(false);
+      if (
+        contextValues.contextType === "faq" &&
+        projectInfo.user.role === userRoles.LOGGEDIN &&
+        !contextValues.selectedProfile
+      ) {
+        toast.error(
+          "حالا که داری از پرسش های متدوال می پرسی، پروفایلت رو هم انتخاب کن"
+        );
+      } else {
+        userQuestion = question;
+        setCanAskQuestion(true);
         setQuestion("");
+        textNotification = toast.loading(systemChatLoading.message);
+
+        setItemIndexToUpdate(randId);
+        // Add user's message to list
+        setList((prevList: any) => [
+          ...prevList,
+          {
+            id: "",
+            type: messageTypes.text,
+            message: userQuestion,
+            creator: configInfo.userLabel,
+          },
+        ]);
+
+        scrollToButtom();
+        onSet(randId);
+        // Call API
+        try {
+          setList((prevList: any) => [
+            ...prevList,
+            {
+              id: randId,
+              type: messageTypes.text,
+              message: "",
+              creator: configInfo.systemLabel,
+              voiceId: "",
+              videoId: "",
+              elapsedTime: "",
+            },
+          ]);
+          scrollToButtom();
+          if (contextValues.contextType === contexts.faq) {
+            response = await getChatByFaq(
+              Number(chatId),
+              userQuestion,
+            );
+          } else {
+            response = await getChatByProfile(
+              Number(contextValues.contextId),
+              userQuestion
+            );
+          }
+
+          if (response?.data) {
+            updateObjectInList(
+              {
+                id: response.data.response_id,
+                type: messageTypes.text,
+                message: response.data.msg,
+                creator: configInfo.systemLabel,
+                elapsedTime: Math.round(response.data.elapsed_time * 100) / 100,
+              },
+              randId
+            );
+
+            toast.success(systemChatSuccess.message, {
+              id: textNotification,
+            });
+
+            router.push(`/chat/${chatId}`);
+
+            // call api for getting the voice
+            voiceResponse = await getVoiceByQuestion(response.data.msg);
+            if (voiceResponse?.url) {
+              updateObjectInList(
+                {
+                  voiceId: voiceResponse!.unique_id,
+                },
+                response.data.response_id
+              );
+              updateObjectInList(
+                {
+                  videoId: voiceResponse!.unique_id,
+                },
+                response.data.response_id
+              );
+              scrollToButtom();
+            }
+          }
+        } catch (error) {
+          setError(true);
+        } finally {
+          setError(false);
+          setQuestion("");
+        }
       }
     }
   };
 
-  const handleSendQuestion = async () => {
-    console.log("handleSendQuestion")
+  // const handleSendQuestion = async () => {
+  //   console.log("handleSendQuestion");
 
-    setList((prevList: any) => [...prevList, {
-      id: "",
-      type: messageTypes.text,
-      message: question,
-      creator: configInfo.userLabel,
-    }]);
+  //   if (!question) {
+  //     toast.error("سوال مدنظرت رو برام بفرست");
+  //   } else {
+  //     if (
+  //       contextValues.contextType === "faq" &&
+  //       projectInfo.user.role === userRoles.LOGGEDIN &&
+  //       !contextValues.selectedProfile
+  //     ) {
+  //       toast.error(
+  //         "حالا که داری از پرسش های متدوال می پرسی، پروفایلت رو هم انتخاب کن"
+  //       );
+  //     } else {
+  //       setList((prevList: any) => [
+  //         ...prevList,
+  //         {
+  //           id: "",
+  //           type: messageTypes.text,
+  //           message: question,
+  //           creator: configInfo.userLabel,
+  //         },
+  //       ]);
 
+  //       textNotification = toast.loading(systemChatLoading.message);
+  //       let response: any = null;
+  //       let voiceResponse: any = null;
+  //       if (contextValues.contextType === contexts.faq) {
+  //         response = await getChatByFaq(
+  //           Number(chatId),
+  //           question,
+  //         );
+  //       } else {
+  //         response = await getChatByProfile(
+  //           Number(contextValues.contextId),
+  //           question
+  //         );
+  //       }
 
-    textNotification = toast.loading(systemChatLoading.message);
+  //       setList((prevList: any) => [
+  //         ...prevList,
+  //         {
+  //           id: randId,
+  //           type: messageTypes.text,
+  //           message: "",
+  //           creator: configInfo.systemLabel,
+  //         },
+  //       ]);
 
-    let response: any = null;
-    let voiceResponse: any = null;
-    if (contextValues.contextType === contexts.faq) {
-      response = await getChatByFaq(Number(contextValues.contextId), question);
-    } else {
-      response = await getChatByProfile(
-        Number(contextValues.contextId),
-        question
-      );
-    }
+  //       if (response?.data) {
+  //         updateObjectInList(
+  //           {
+  //             id: response.data.response_id,
+  //             type: messageTypes.text,
+  //             message: response.data.msg,
+  //             creator: configInfo.systemLabel,
+              
+  //           },
+  //           randId
+  //         );
 
-    setList((prevList: any) => [...prevList, {
-      id: randId,
-      type: messageTypes.text,
-      message: "",
-      creator: configInfo.systemLabel,
-    }]);
+  //         // call api for getting the voice
+  //         voiceResponse = await getVoiceByQuestion(response.data.msg);
 
-     if (response?.data) {
-      updateObjectInList({
-        id: response.data.response_id,
-        type: messageTypes.text,
-        message: response.data.msg,
-        creator: configInfo.systemLabel,
-      }, randId);
+  //         toast.success(systemChatSuccess.message, {
+  //           id: textNotification,
+  //         });
 
-      // call api for getting the voice
-      voiceResponse = await getVoiceByQuestion(response.data.msg);
+  //         if (voiceResponse?.url) {
+  //           setList((prevList: any) => [
+  //             ...prevList,
+  //             {
+  //               id: voiceResponse!.unique_id,
+  //               type: messageTypes.voice,
+  //               message: "",
+  //               creator: configInfo.systemLabel,
+  //             },
+  //           ]);
 
-      toast.success(systemChatSuccess.message, {
-        id: textNotification,
-      });
-
-      if (voiceResponse?.url) {
-        setList((prevList: any) => [...prevList, {
-          id: voiceResponse!.unique_id,
-          type: messageTypes.voice,
-          message: "voice",
-          creator: configInfo.systemLabel,
-        }]);
-        
-        setList((prevList: any) => [...prevList, {
-          id: voiceResponse!.unique_id,
-          type: messageTypes.video,
-          message: "video",
-          creator: configInfo.systemLabel,
-        }]);
-              }
-      setQuestion("");
-    }
-  };
+  //           setList((prevList: any) => [
+  //             ...prevList,
+  //             {
+  //               id: voiceResponse!.unique_id,
+  //               type: messageTypes.video,
+  //               message: "",
+  //               creator: configInfo.systemLabel,
+  //             },
+  //           ]);
+  //         }
+  //         setQuestion("");
+  //       }
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     document.addEventListener("click", closeBoxOnOutsideClick);
@@ -241,15 +294,14 @@ const SendIcon = ({
 
   return (
     <>
+      {/* {JSON.stringify(contextValues)} */}
       {list.length ? (
         <SendHorizontal
           className="relative top-[1px] ml-1 h-5 w-5 rotate-180 cursor-pointer transition-transform duration-500"
           color={getSendButtonColor(theme, question)}
           aria-hidden="true"
-          onClick={handleSendQuestion}
+          onClick={handleSendClick} //handleSendQuestion
         />
-      ) : !contextValues.contextType ? (
-          <StopCircle onClick={handleContextClick} className="cursor-pointer" />
       ) : (
         <SendHorizontal
           className="relative top-[1px] ml-1 h-5 w-5 rotate-180 cursor-pointer transition-transform duration-200"
@@ -267,6 +319,19 @@ const SendIcon = ({
           <ContextSelector />
         </div>
       )}
+      <form onSubmit={handleSendClick} className="w-full">
+        <Input
+          type="text"
+          placeholder={
+            !canAskQuestion && !contextValues.contextType
+              ? "سوالت رو ازم بپرس، مشتاقم که جوابتو بدم"
+              : "چه جوری می تونم کمکت کنم؟"
+          }
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          className="no-focus placeholder small-notification sm:paragraph-regular background-light900_dark400 border-none text-right shadow-none outline-none rtl-grid"
+        />
+      </form>
     </>
   );
 };

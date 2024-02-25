@@ -6,6 +6,7 @@ import ChatInput from "./ChatInput";
 
 const ChatWelcome = () => {
   const [list, setList] = useState([]);
+  
   return (
     <div className="flex h-screen w-full flex-col p-5">
       <div className="flex-1">

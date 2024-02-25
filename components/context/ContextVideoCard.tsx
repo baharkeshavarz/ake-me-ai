@@ -14,9 +14,10 @@ interface ContextVideoCardProps {
   items: HologramItem[];
   setHolograms: Dispatch<SetStateAction<HologramItem[]>>;
   changeHandler: (e: any) => void;
+  card: string;
 }
 
-const ContextVideoCard = ({ items, setHolograms, changeHandler }: ContextVideoCardProps) => {
+const ContextVideoCard = ({ items, setHolograms, changeHandler, card }: ContextVideoCardProps) => {
   const [videoId, setVideoId] = useState(items[0].unique_id || "");
   const [isCapturing, setIsCapturing] = useState(false);
 
@@ -58,18 +59,23 @@ const ContextVideoCard = ({ items, setHolograms, changeHandler }: ContextVideoCa
              </div>
           )
        }
-      <div className="rtl-grid grid w-full grid-cols-1 gap-3 py-2 sm:grid-cols-4 lg:grid-cols-4">
-        <button
-            onClick={handleUploadNew}
-            className="background-dark400_light900 text-light700_dark500 flex-center min-w-fit rounded-lg p-3 text-sm" 
+      <div className="rtl-grid grid w-full grid-cols-1 gap-3 py-2 sm:grid-cols-4">
+        <div className={`${isCapturing ? "w-full col-span-12 flex-center" : "min-w-fit"}`}>
+            <button
+              onClick={handleUploadNew}
+              className="background-dark400_light900 text-light700_dark500 flex-center min-w-fit rounded-lg p-3 text-[0.8rem]"
          >
-          {isCapturing && <PulseLoading color="white" size={16}/>}
-          آپلود ویدیوی من
+          {isCapturing && <PulseLoading color="white" size={12}/>}
+          {!isCapturing && "آپلود ویدیوی من" }
         </button> 
+
+        </div>
+      
         {!isCapturing && (
             items.map((item) => (
               <div key={item.id} className="flex-center gap-x-1">
                  <button
+                     data-card={card}
                      onClick={(e)=>{
                        playVideo(e, item.unique_id);
                        changeHandler(e);

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Sheet,
   SheetClose,
@@ -13,20 +13,42 @@ import NewChat from "@/components/chats/NewChat";
 import NavbarMessageList from "@/components/chats/NavbarMessageList";
 import Navbar from "./Navbar";
 import NavUserInfo from "./NavUserInfo";
+import { useSetting } from "@/hooks/useSetting";
+import { gettSettingLogo } from "@/actions/get-setting";
+
 
 const MobileNav = () => {
+  const { projectInfo } = useSetting();
+  const [logo, setLogo] = useState("");
+
+  // Find the logo
+  useEffect(() => {
+    const getSettingLogo = async () => {
+      try {
+      const response = await gettSettingLogo(projectInfo.id);
+      const data = await response.blob();
+      const logoUrl = URL.createObjectURL(data);
+      setLogo(logoUrl);
+      } catch (error) {
+        console.log("error", error);
+      } 
+    };
+    getSettingLogo();
+  }, [projectInfo]);
+
+
   return (
     <div className="background-light900_dark400 flex-between w-full p-5">
       <NewChat />
       <Link href="/" className="flex items-center gap-1">
         <Image
-          src="/assets/images/site-logo.svg"
-          width={23}
-          height={23}
-          alt="chatBot"
+          src={logo}
+          width={35}
+          height={35}
+          alt="لوگو"
         />
-        <p className="h2-bold font-spaceGrotesk text-dark-100 dark:text-light-900">
-          AI <span className="text-primary-500">Questioning</span>
+        <p className="h5-bold font-spaceGrotesk text-dark-100 dark:text-light-900">
+         دستیار هوشمند <span className="text-primary-500"> {projectInfo.name}</span>
         </p>
       </Link>
 

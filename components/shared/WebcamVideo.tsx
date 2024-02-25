@@ -128,15 +128,15 @@ const WebcamVideo = ({ holograms, setIsCapturing, setHolograms }: WebcamVideoPro
         ref={webcamRef}
         videoConstraints={videoConstraints}
       />
-      <div className="flex-center w-full gap-x-2 p-3">
+      <div className="flex-center w-full gap-2 p-3 sm:flex-row flex-col-reverse">
             <HoverCard>
               <HoverCardTrigger className="text-[0.75rem] hover:cursor-pointer">
               <input
-                type="text"
+                 type="text"
                  placeholder="اسم فایلت رو انتخاب کن"
                  value={fileName}
                  onChange={handleInputChange}
-                 className="rounded-md border bg-white px-4 py-2 text-center text-gray-700 focus:border-gray-400 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
+                 className="rounded-md border bg-white px-4 py-2 text-[0.8rem] text-center text-gray-700 focus:border-gray-400 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
                />
               </HoverCardTrigger>
                 <HoverCardContent className="background-dark400_light900 text-light700_dark500 w-fit text-center text-sm">
@@ -145,33 +145,33 @@ const WebcamVideo = ({ holograms, setIsCapturing, setHolograms }: WebcamVideoPro
                   .از خط فاصله استفاده نکنید
                 </HoverCardContent>
             </HoverCard>
-          
-            <button
-               onClick={handleCancelCaptureClick}
-               className="background-strop_upload rounded-lg px-4 py-2.5"
-            >
-             !منصرف شدم
-           </button>
-          {capturing ? (
-            <button
-               onClick={handleStopCaptureClick}
-               className="background-strop_upload rounded-lg px-4 py-2.5"
-            >
-            توقف ضبط
-           </button>
-          ) : (
-            <button 
-               onClick={handleStartCaptureClick}
-               className="background-upload rounded-lg px-4 py-2"
-            >
-            شروع ضبط
-           </button>
-          )}
-
+            <div className="gap-x-2 flex-center text-[0.8rem]">
+                  <button
+                      onClick={handleCancelCaptureClick}
+                      className="background-strop_upload rounded-lg px-1 py-2.5"
+                      >
+                        !منصرف شدم
+                      </button>
+                    {capturing ? (
+                    <button
+                      onClick={handleStopCaptureClick}
+                      className="background-strop_upload rounded-lg px-3 py-2.5"
+                    >
+                    توقف ضبط
+                   </button>
+                      ) : (
+                      <button 
+                      onClick={handleStartCaptureClick}
+                      className="background-upload rounded-lg px-3 py-2"
+                    >
+                    شروع ضبط
+                    </button>
+                   )}
+            </div>
           {recordedChunks.length > 0 && (
             <button 
                 onClick={handleFileUpload}
-                className="background-send_upload flex-center min-w-fit gap-x-2 rounded-lg px-4 py-2"
+                className="background-send_upload flex-center min-w-fit gap-x-2 rounded-lg px-4 py-2 text-[0.8rem]"
                 >
                {isUploading && <SpinningLoading width="6" height="6" />}
                 ارسال فایل

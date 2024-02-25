@@ -29,8 +29,6 @@ const useMessageStore = create<MessageStoreState>((set) => {
       const newChatList = [...state.chatList];
       newChatList[index] = updatedItem;
       localStorage.setItem('chatList', JSON.stringify(newChatList));
-      console.log("updateMessage", newChatList);
-
       return { chatList: newChatList };
     }),
     removeMessage: (index) => set((state) => {

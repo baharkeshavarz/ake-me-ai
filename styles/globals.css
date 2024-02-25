@@ -123,6 +123,13 @@ body {
   direction: rtl;
 }
 
+.ltr-grid {
+  direction: ltr;
+}
+
+.topZIndex {
+  z-index: 999999 !important;
+}
 
 
 .flashing-icon {

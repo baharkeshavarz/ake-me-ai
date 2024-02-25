@@ -1,20 +1,19 @@
 "use client";
-import { TypeAnimation } from 'react-type-animation';
+
+import Typed from 'react-typed';
 
 interface TypingAnimationProps{
   text: string;
+  textSpeed?: number;
 }
 
-const TypingAnimation = ({ text }: TypingAnimationProps) => {
+const TypingAnimation = ({ text, textSpeed= 50 }: TypingAnimationProps) => {
   return (
-    <TypeAnimation
-        sequence={[
-          text,
-        ]}
-    wrapper="span"
-    speed={50}
-    style={{ display: 'inline-block' }}
-  />
+    <Typed
+       strings={[text]}
+       typeSpeed={textSpeed}
+       backSpeed={10}
+    />
   );
 };
 
